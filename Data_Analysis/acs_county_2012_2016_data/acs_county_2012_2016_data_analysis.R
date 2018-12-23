@@ -146,7 +146,8 @@ data$STATE_FIPS <- as.character(data$STATE_FIPS)
 # join the county area data to summary data for respective states and counties
 data <- left_join(data, county_area, by = c("STATE_FIPS" = "STATE", "county_code" = "COUNTY"))
 
-# data check - check whether the data for census area is same for each state,county combination in both summary df and county area df
+# data check - check whether the data for census area is same for each state,
+# county combination in both summary df and county area df
 ########
 state_county <- paste0(data$STATE_FIPS, data$county_code)
 
