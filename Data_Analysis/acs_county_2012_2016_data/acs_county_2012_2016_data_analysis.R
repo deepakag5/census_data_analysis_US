@@ -110,7 +110,8 @@ data <- data %>%
 
 ######## Single Family Housing Units built since 2000 ################
 data <- data %>%
-        mutate('total_single_family_households_since_2000' = select(., matches('^1, detached.*attached$|attached.1$|attached.6$|attached.7$')) %>%
+        mutate('total_single_family_households_since_2000' =
+        select(., matches('^1, detached.*attached$|attached.1$|attached.6$|attached.7$')) %>%
         apply(1, sum, na.rm = TRUE))
 
 ######## Single Family Housing Units built before 2000 ################
@@ -123,11 +124,13 @@ data <- data %>%
 
 ######## Not Single Family Housing Units built since 2000 ################
 data <- data %>%
-        mutate('total_not_single_family_households_since_2000' = total_family_households_since_2000 - total_single_family_households_since_2000)
+        mutate('total_not_single_family_households_since_2000' =
+        total_family_households_since_2000 - total_single_family_households_since_2000)
 
 ######## Not Single Family Housing Units built before 2000 ################
 data <- data %>%
-        mutate('total_not_single_family_households_before_2000' = total_family_households_before_2000 - total_single_family_households_before_2000)
+        mutate('total_not_single_family_households_before_2000' =
+        total_family_households_before_2000 - total_single_family_households_before_2000)
 
 
 ################ Population and Housing Density ######################
