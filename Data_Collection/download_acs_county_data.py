@@ -6,10 +6,10 @@
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # %%-----------------------------------------------------------------------
 
+# Importing the required packages
 import datetime
 import os
 
-# Importing the required packages
 import numpy as np
 import pandas as pd
 
