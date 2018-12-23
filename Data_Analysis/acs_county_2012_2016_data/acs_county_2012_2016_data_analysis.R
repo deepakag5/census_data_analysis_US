@@ -97,41 +97,36 @@ total_housing_units, 3), "housing_units_built_before_2000_prop" = round(housing_
 ###################### Family Housholds #################################
 
 ######## Total Family Housing Units built since 2000 ################
-data %>%
-    select(intersect(starts_with('Built 20'), contains(':'))) %>%
-    head(2)
 
-data <- data %>% mutate('total_family_households_since_2000' = select(., intersect(starts_with('Built 20'), contains(':'))) %>% apply(1, sum, na.rm = TRUE))
+data <- data %>%
+        mutate('total_family_households_since_2000' = select(., intersect(starts_with('Built 20'), contains(':'))) %>%
+        apply(1, sum, na.rm = TRUE))
 
-data %>%
-    select(intersect(starts_with('Built 19'), contains(':'))) %>%
-    head(2)
 
-data <- data %>% mutate('total_family_households_before_2000' = select(., intersect(starts_with('Built 19'), contains(':'))) %>% apply(1, sum, na.rm = TRUE))
+data <- data %>%
+        mutate('total_family_households_before_2000' = select(., intersect(starts_with('Built 19'), contains(':'))) %>%
+        apply(1, sum, na.rm = TRUE))
 
 ######## Single Family Housing Units built since 2000 ################
-data %>%
-    select(matches('^1, detached.*attached$|attached.1$|attached.6$|attached.7$')) %>%
-    head(2)
-
-data <- data %>% mutate('total_single_family_households_since_2000' = select(., matches('^1, detached.*attached$|attached.1$|attached.6$|attached.7$')) %>%
-apply(1, sum, na.rm = TRUE))
+data <- data %>%
+        mutate('total_single_family_households_since_2000' = select(., matches('^1, detached.*attached$|attached.1$|attached.6$|attached.7$')) %>%
+        apply(1, sum, na.rm = TRUE))
 
 ######## Single Family Housing Units built before 2000 ################
-data %>%
-    select(setdiff(starts_with('1, detached'),
-    matches('attached$|attached.1$|attached.6$|attached.7$'))) %>%
-    head(2)
 
-data <- data %>% mutate('total_single_family_households_before_2000' = select(., setdiff(starts_with('1, detached'),
-matches('attached$|attached.1$|attached.6$|attached.7$'))) %>% apply(1, sum, na.rm = TRUE))
+data <- data %>%
+        mutate('total_single_family_households_before_2000' = select(., setdiff(starts_with('1, detached'),
+        matches('attached$|attached.1$|attached.6$|attached.7$'))) %>%
+        apply(1, sum, na.rm = TRUE))
 
 
 ######## Not Single Family Housing Units built since 2000 ################
-data <- data %>% mutate('total_not_single_family_households_since_2000' = total_family_households_since_2000 - total_single_family_households_since_2000)
+data <- data %>%
+        mutate('total_not_single_family_households_since_2000' = total_family_households_since_2000 - total_single_family_households_since_2000)
 
 ######## Not Single Family Housing Units built before 2000 ################
-data <- data %>% mutate('total_not_single_family_households_before_2000' = total_family_households_before_2000 - total_single_family_households_before_2000)
+data <- data %>%
+        mutate('total_not_single_family_households_before_2000' = total_family_households_before_2000 - total_single_family_households_before_2000)
 
 
 ################ Population and Housing Density ######################
@@ -150,7 +145,10 @@ data <- left_join(data, county_area, by = c("STATE_FIPS" = "STATE", "county_code
 # data check - check whether the data for census area is same for each state,county combination in both summary df and county area df
 ########
 state_county <- paste0(data$STATE_FIPS, data$county_code)
-data %>% select(STATE_FIPS, county_code, CENSUSAREA)
+
+data %>%
+    select(STATE_FIPS, county_code, CENSUSAREA)
+
 county_area %>%
     filter(paste0(STATE, COUNTY) %in% state_county) %>%
     select(STATE, COUNTY, CENSUSAREA)
