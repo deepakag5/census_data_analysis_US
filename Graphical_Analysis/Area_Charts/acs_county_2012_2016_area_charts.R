@@ -17,8 +17,8 @@ library(sf)
 # create area types
 data <- data %>% mutate("area_type" = ifelse(county_name %in% c("District of Columbia", "Arlington County"), "Urban",
                                             ifelse(county_name %in% c("Prince George's County",
-                                            "Montgomery County", "Fairfax County", "Fairfax city", "Falls Church city"), "SubUrban",
-                                            "ExUrban")))
+                                            "Montgomery County", "Fairfax County", "Fairfax city", "Falls Church city"),
+                                            "SubUrban","ExUrban")))
 
 # create a function to plot the absolute values for given cols in col_vec
 plot_area_level_absolute_values <- function(df, colname, area_col){
@@ -29,12 +29,10 @@ plot_area_level_absolute_values <- function(df, colname, area_col){
 
     # create the plot for respective column
     p <- ggplot(df, aes_(x = area_col, y = colname, fill = area_col)) +
-        geom_bar(stat = "identity") + #scale_fill_manual(values=my_scale)+
-    #geom_text(aes_(label=colname), hjust=-0.1, color="black", size=3.5)+
+        geom_bar(stat = "identity") +
         theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         panel.background = element_blank(),
-        #panel.grid.major.y = element_line(color="gray"),
         legend.position = "none",
         title = element_text(size = 12.5),
         axis.line.x = element_line(color = "black"),
