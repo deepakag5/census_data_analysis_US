@@ -15,13 +15,10 @@ library(sf)
 ##############################################################################
 ############################ B. Plots for Area Types (Urban, SubUrban, ExUrban) ###################################################
 # create area types
-data <- data %>% mutate("area_type" = ifelse(county_name %in% c("District of Columbia",
-"Arlington County"), "Urban",
+data <- data %>% mutate("area_type" = ifelse(county_name %in% c("District of Columbia", "Arlington County"), "Urban",
 ifelse(county_name %in% c("Prince George's County",
-"Montgomery County",
-"Fairfax County",
-"Fairfax city",
-"Falls Church city"), "SubUrban", "ExUrban")))
+"Montgomery County", "Fairfax County", "Fairfax city", "Falls Church city"), "SubUrban",
+"ExUrban")))
 
 # create a function to plot the absolute values for given cols in col_vec
 plot_area_level_absolute_values <- function(df, colname, area_col){
