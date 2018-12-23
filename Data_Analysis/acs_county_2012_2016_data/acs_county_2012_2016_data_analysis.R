@@ -90,8 +90,9 @@ data <- data %>% mutate("housing_units_built_before_2000" = select(., `Built 199
 apply(1, sum, na.rm = TRUE))
 
 ######## Housing Units built before/since 2000 proportion ################
-data <- data %>% mutate("housing_units_built_since_2000_prop" = round(housing_units_built_since_2000 /
-total_housing_units, 3), "housing_units_built_before_2000_prop" = round(housing_units_built_before_2000 / total_housing_units, 3))
+data <- data %>%
+        mutate("housing_units_built_since_2000_prop" = round(housing_units_built_since_2000 / total_housing_units, 3),
+        "housing_units_built_before_2000_prop" = round(housing_units_built_before_2000 / total_housing_units, 3))
 
 
 ###################### Family Housholds #################################
