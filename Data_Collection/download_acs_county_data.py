@@ -368,10 +368,8 @@ def get_summary_year_data(start_year, end_year):
         # subset the age of housing dataset for logical record number and decade wise share of housing data
         if int(end_year) < 2015:
             AgeOfHousing_df_subset = AgeOfHousing_df.iloc[:, np.r_[5, 11:21]]
-            print(AgeOfHousing_df.iloc[:, np.r_[5, 11:21]].columns.tolist())
         else:
             AgeOfHousing_df_subset = AgeOfHousing_df.iloc[:, np.r_[5, 11:22]]
-            print(AgeOfHousing_df.iloc[:, np.r_[5, 12:22]].columns.tolist())
 
         # merge the age of housing data with summary dataframe
         tempDF = pd.merge(df, AgeOfHousing_df_subset, on="LOGRECNO")
@@ -387,15 +385,9 @@ def get_summary_year_data(start_year, end_year):
         if int(end_year) < 2015:
             Tenure_by_year_df_subset = Tenure_by_year_df.iloc[:, np.r_[5, 11:84]]
 
-            print(Tenure_by_year_df.columns.tolist())
-
-            print(Tenure_by_year_df.iloc[:, np.r_[5, 11:84]].columns.tolist())
         else:
             Tenure_by_year_df_subset = Tenure_by_year_df.iloc[:, np.r_[5, 11:98]]
 
-            print(Tenure_by_year_df.columns.tolist())
-
-            print(Tenure_by_year_df.iloc[:, np.r_[5, 11:98]].columns.tolist())
 
         # merge the age of housing data with summary dataframe
         tempDF1 = pd.merge(tempDF, Tenure_by_year_df_subset, on="LOGRECNO")
@@ -407,9 +399,6 @@ def get_summary_year_data(start_year, end_year):
 
         mergedDF = pd.merge(tempDF1, FamilyType_by_children_subset, on="LOGRECNO")
 
-        # print columns of summary dataframe
-        print(mergedDF.columns.tolist())
-        # print(mergedDf.head())
 
         # transpose the merged dataframe
         mergedDF_T = mergedDF.T
@@ -428,10 +417,6 @@ def get_summary_year_data(start_year, end_year):
 
     mergedDF = pd.concat([mergedDF_DC_T, mergedDF_MD_T, mergedDF_VA_T, mergedDF_WV_T], axis=1)
 
-    print(mergedDF.head())
-    print(mergedDF.columns.tolist())
-    print(mergedDF.index.tolist())
-
     # creating multilevel index
 
     df = mergedDF
@@ -447,16 +432,11 @@ def get_summary_year_data(start_year, end_year):
 
     df.columns.name = ""
 
-    print(df)
-
     filename = datetime.datetime.today().strftime(
         '%Y%m%d') + '_cnty_acs_' + estimate_start_year + '_' + estimate_end_year + '_absolute_values.csv'
-    print(filename)
-    print(type(filename))
+
 
     save_file = os.path.join(outDir, str(filename))
-
-    print(save_file)
 
     df.to_csv(save_file, sep=',')
 
