@@ -168,7 +168,6 @@ def get_summary_year_data(start_year, end_year):
                 logrecno = row[13:20].decode('utf-8', 'ignore')
                 state_fips = row[25:27].decode('utf-8', 'ignore')
                 county = row[27:30].decode('utf-8', 'ignore')
-                # zcta = row[130:135].decode('utf-8', 'ignore')
                 geoid = row[178:218].strip().decode('utf-8', 'ignore')
                 gname = row[218:].strip().decode('utf-8', 'ignore')
                 geo_geoid[logrecno] = geoid
@@ -176,15 +175,12 @@ def get_summary_year_data(start_year, end_year):
                 geo_sumlevel[logrecno] = sumlevel
                 geo_state[logrecno] = state_fips
                 geo_county[logrecno] = county
-            # geo_zcta[logrecno] = zcta
 
-        # print(geo_state)
 
         # for matching logical record numbers insert columns from geography file in table data
         data.insert(loc=6, column="SUMMARY_LEVEL", value=data["LOGRECNO"].map(geo_sumlevel))
         data.insert(loc=7, column="STATE_FIPS", value=data["LOGRECNO"].map(geo_state))
         data.insert(loc=8, column="COUNTY", value=data["LOGRECNO"].map(geo_county))
-        # data.insert(loc=9, column="ZCTA", value=data["LOGRECNO"].map(geo_zcta))
         data.insert(loc=9, column="GEO_ID", value=data["LOGRECNO"].map(geo_geoid))
         data.insert(loc=10, column="GEO_NAME", value=data["LOGRECNO"].map(geo_geoname))
 
