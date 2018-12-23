@@ -15,7 +15,7 @@ import pandas as pd
 
 
 # %%-----------------------------------------------------------------------
-######################## B. Get Table Data ############################
+######################## A. Get Table Data ############################
 
 def get_summary_year_data(start_year, end_year):
     start_year = str(start_year)
@@ -45,7 +45,7 @@ def get_summary_year_data(start_year, end_year):
         else:
             docFilePath = inDir + '/ACS_5yr_Seq_Table_Number_Lookup.xls'
 
-        ######################## A. Read Documentation File ############################
+        ######################## B. Read Documentation File ############################
         # Import the documentation file as dataframe
         documentation_file = pd.read_excel(docFilePath, header=0, dtype=object, na_filter=False)
 
