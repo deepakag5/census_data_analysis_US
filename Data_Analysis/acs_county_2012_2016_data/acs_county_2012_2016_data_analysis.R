@@ -162,3 +162,5 @@ county_area %>%
 # create the poplation density and housing units density columns
 data <- data %>% mutate('population_density' = round(Total_population / CENSUSAREA))
 data <- data %>% mutate('housing_units_density' = round(total_housing_units / CENSUSAREA))
+
+##############################################################################
