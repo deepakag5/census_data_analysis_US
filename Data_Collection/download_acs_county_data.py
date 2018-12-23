@@ -22,7 +22,7 @@ def get_summary_year_data(start_year, end_year):
     end_year = str(end_year)
 
     inDir = r'../census/american_community_survey/' + start_year + '_' + end_year + '_5year_estimates/raw_data'
-    outDir = r"/python_output/summary_files_data"
+    outDir = r"../python_output/summary_files_data"
 
     # %%-----------------------------------------------------------------------
     # specify function to collect the data for required table and save it as a csv
