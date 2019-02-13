@@ -57,9 +57,7 @@ reformat_subset_data <- function(df) {
   # print the df to check if the format is appropriate
   print(head(data))
   
-  # rename the columns to avoid column duplicates error
-  #colnames(data) <- make.unique(names(data))
-  
+
   #names of columns in data frame
   cols <- colnames(data)
   
@@ -157,7 +155,6 @@ reformat_subset_data <- function(df) {
     
   }else{
     ## for year 2015-2016
-    #data %>% select(matches('^1, detached.*attached$|attached.1$|attached.6$|attached.7$')) %>% head(2)
     
     data <- data %>% mutate('total_single_family_households_since_2000'= 
                      select(.,matches('^B25127_4_|B25127_11_|B25127_47_|B25127_54_')) %>% apply(1, sum, na.rm=TRUE))
@@ -248,12 +245,7 @@ acs_cnt_2011_2016 <- rbind(acs_cnt_2007_2011_subset,acs_cnt_2008_2012_subset, ac
 
 
 # load data for years before 2011
-# dataset was created by program at following location
-# /groups/brooksgrp/center_for_washington_area_studies/sas_programs/load_county_dec_cen/decyrs1910to2010v10.sas
-
-
-acs_cnt_1910_2010 <- read.csv(paste0(groupDir,"/center_for_washington_area_studies/sas_output/load_dec_census/was_msas_1910_2010_20190115.csv"),
-                              stringsAsFactors = F)
+acs_cnt_1910_2010 <- read.csv(paste0(data_dir,"was_msas_1910_2010_20190115.csv"),stringsAsFactors = F)
 
 colnames(acs_cnt_1910_2010)
 
@@ -337,7 +329,6 @@ acs_cnt_1950_2016 <- acs_cnt_1950_2016 %>% mutate("area_type"=ifelse(countyfips 
                                                                             "ExUrban")))
 
 # replace NA with values of county, state and state code within groups
-#https://stackoverflow.com/questions/31879390/replace-na-with-values-in-another-row-of-same-column-for-each-group-in-r
 acs_cnt_1950_2016 <- acs_cnt_1950_2016 %>% group_by(statefips, countyfips) %>% mutate(county_name=unique(county_name[!is.na(county_name)]),
                                                                                       state_name=unique(state_name[!is.na(state_name)]),
                                                                                       state_code=unique(state_code[!is.na(state_code)]))
@@ -360,8 +351,6 @@ acs_cnt_2016_subset <- acs_cnt_1950_2016 %>%
 # melt the dataframe
 acs_cnt_2016_subset_melt <- melt(acs_cnt_2016_subset, id.var=c("county_name","area_type"))
 
-#https://stackoverflow.com/questions/22850026/filtering-row-which-contains-a-certain-string-using-dplyr/24821141
-
 # create a column unit_type to assign new or exsting for housing units
 acs_cnt_2016_subset_melt <- acs_cnt_2016_subset_melt %>%
                                           mutate("unit_type" = ifelse(grepl('since_2000$', variable),"New","Existing"))
@@ -374,8 +363,6 @@ acs_cnt_2016_area_wise_new_ext_housing_melt <- acs_cnt_2016_subset_melt %>%
 p <- ggplot(acs_cnt_2016_area_wise_new_ext_housing_melt, aes(x = area_type, y = total_housing_units, fill = unit_type)) +
   geom_bar(stat = "identity")+
   scale_y_continuous(labels = scales::comma, breaks = trans_breaks(identity, identity, n = 5))+
-  #scale_x_continuous(limits= c(1950, 2016), breaks = c(seq(1950,2016,10))) +
-  #scale_colour_manual(values = c("orange","green"))+
   labs(x = "area type", y = "num of housing units", colour = "Parameter")+
   scale_shape_manual(values = c(16, 21)) +
   #labs(x="", y="") +
@@ -397,15 +384,11 @@ p <- ggplot(acs_cnt_2016_area_wise_new_ext_housing_melt, aes(x = area_type, y = 
         legend.key = element_rect(fill = "white"),
         legend.spacing = unit(0.45,"cm"))+
   guides(colour = guide_legend(override.aes = list(size=10),reverse=F), size=FALSE)
-# Here we define spaces as the big separator
-#point <- format_format(big.mark = ",", decimal.mark = ".", scientific = FALSE)
+
 
 
 # make the barplot horizontal
 p1 <- p + coord_flip() #+ scale_y_continuous(labels = point,expand = expand_scale(mult = c(0, .1)))
-
-p1
-
 
 # save the plot
 ggsave(paste0(out_dir_ch01,"p1.g1_",dateo,"_acs_cnt_1950_2016_housing_units_area_wise.jpg"),
