@@ -1,12 +1,12 @@
 #####################################################################
-#
+
 # this program takes the summary data created in
 # /Data_Collection/download_acs_county_data.py
 # and performs analysis on it to produce required graphs
 # for presentation purposes
-#
+
 # Januray 16, 2019
-#
+
 # acs_county_page_plots_2016_v03.R
 ##############################################################################
 ##############################################################################
@@ -27,7 +27,7 @@ dateo
 
 # data and output directories
 data_dir <- paste0("/Data_Collection/")
-out_dir <- paste0("/Graphical_Analysis/")
+out_dir <- paste0("/Graphs/")
 
 
 # load the data
