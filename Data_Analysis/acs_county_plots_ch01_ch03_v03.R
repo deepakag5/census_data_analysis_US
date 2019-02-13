@@ -402,9 +402,6 @@ acs_cnt_2016_area_wise_new_housing_melt <- acs_cnt_2016_area_wise_new_ext_housin
 # plot the graph
 p <- ggplot(acs_cnt_2016_area_wise_new_housing_melt, aes(x = area_type, y = total_housing_units, fill = county_name)) +
   geom_bar(stat = "identity")+
-  #scale_y_continuous(labels = comma,  limits = c(0, 8000000), breaks = c(seq(0,8000000,2000000)))+
-  #scale_x_continuous(limits= c(1950, 2016), breaks = c(seq(1950,2016,10))) +
-  #scale_colour_manual(values = c("orange","green"))+
   labs(x = "area type", y = "num of new housing units", colour = "Parameter")+
   scale_shape_manual(values = c(16, 21)) +
   #labs(x="", y="") +
@@ -426,14 +423,12 @@ p <- ggplot(acs_cnt_2016_area_wise_new_housing_melt, aes(x = area_type, y = tota
         legend.key = element_rect(fill = "white"),
         legend.spacing = unit(0.45,"cm"))+
   guides(colour = guide_legend(override.aes = list(size=5),reverse=F), size=FALSE)
-# Here we define spaces as the big separator
-#point <- format_format(big.mark = ",", decimal.mark = ".", scientific = FALSE)
 
 
 # make the barplot horizontal
-p1 <- p + coord_flip() #+ scale_y_continuous(labels = point,expand = expand_scale(mult = c(0, .1)))
+p1 <- p + coord_flip()
 
-p1
+
 
 # save the plot
 ggsave(paste0(out_dir_ch01,"p1.g2_",dateo,"_acs_cnt_1950_2016_housing_units_after_2000_area_county_wise.jpg"),
@@ -465,14 +460,9 @@ acs_cnt_2000_2016_comp_pct <- acs_cnt_2000_2016_comp_pct %>% arrange(year) %>% a
 
 # plot the graph
 p1 <- ggplot(data = subset(acs_cnt_2000_2016_comp_pct, year %in% c("2000")), aes(x = median_housing_value, y = housing_units_pct_change_from_2000)) +
-  #geom_point(aes(color = factor(damage_eyeball,levels=c("irreparable","extensive","minimal","none")),
-  #                fill = factor(damage_eyeball,levels=c("irreparable","extensive","minimal","none"))),size=7) +
-  #geom_point(aes(color = factor(STATE)),shape = 16, size = 3)+
-  geom_point(shape = 16, size = 5)+geom_text(aes(label=county_name),hjust=-0.1, vjust=0.15)+
+    geom_point(shape = 16, size = 5)+geom_text(aes(label=county_name),hjust=-0.1, vjust=0.15)+
   scale_x_continuous(labels = comma,limits= c(0, 300000), breaks = c(seq(0,300000,50000))) +
-  #scale_y_continuous(limits= c(0, 30000), breaks = c(seq(0,30000,10000))) +
   labs(x = "median housing value 2000", y="% change in no. of housing units from 2000 to 2016")+
-  #scale_color_manual(values = c("none" = damage_scale[4], "minimal" = damage_scale[3],"extensive" = damage_scale[2],"irreparable" = damage_scale[1]))+
   geom_abline(intercept = 0, slope = 0.4, color = "grey")+  # 45 degree line
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
@@ -493,7 +483,6 @@ p1 <- ggplot(data = subset(acs_cnt_2000_2016_comp_pct, year %in% c("2000")), aes
         legend.key = element_rect(fill = "white"),
         legend.spacing = unit(0.35,"cm"))+ guides(colour = guide_legend(override.aes = list(size=10)))
 
-p1
 
 # save the graph
 ggsave(paste0(out_dir_ch01,"p1.g3.1_",dateo,"_acs_cnt_comp_2000_2016_scatter_house_median_value_percent_change_housing_units.jpg"),
@@ -526,20 +515,14 @@ acs_cnt_2000_2016_comp_abs <- acs_cnt_2000_2016_comp_abs %>% arrange(year) %>% a
 # plot the graph
 p1 <- ggplot(data = subset(acs_cnt_2000_2016_comp_abs, year %in% c("2000")), aes(x = median_housing_value, 
                                                                                  y = housing_units_abs_change_from_2000_prop)) +
-  #geom_point(aes(color = factor(damage_eyeball,levels=c("irreparable","extensive","minimal","none")),
-  #                fill = factor(damage_eyeball,levels=c("irreparable","extensive","minimal","none"))),size=7) +
-  #geom_point(aes(color = factor(STATE)),shape = 16, size = 3)+
   geom_point(shape = 16, size = 5)+geom_text(aes(label=county_name),hjust=-0.1, vjust=0.15)+
   scale_x_continuous(labels = comma,limits= c(0, 300000), breaks = c(seq(0,300000,50000))) +
-  #scale_y_continuous(limits= c(0, 30000), breaks = c(seq(0,30000,10000))) +
   labs(x = "median housing value 2000", y="% regional share in no. of housing units from 2000 to 2016")+
-  #scale_color_manual(values = c("none" = damage_scale[4], "minimal" = damage_scale[3],"extensive" = damage_scale[2],"irreparable" = damage_scale[1]))+
   geom_abline(intercept = 0, slope = 0.4, color = "grey")+  # 45 degree line
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         panel.background = element_blank(),
         panel.grid.major.y = element_line(color="gray"),
-        #legend.position = "right",
         axis.line.x = element_line(color = "black"),
         axis.ticks.x = element_blank(),
         axis.ticks.y = element_blank(),
@@ -552,7 +535,7 @@ p1 <- ggplot(data = subset(acs_cnt_2000_2016_comp_abs, year %in% c("2000")), aes
         legend.text = element_text(size=25),
         legend.key.size = unit(2,"line"),
         legend.key = element_rect(fill = "white"),
-        legend.spacing = unit(0.35,"cm"))+ guides(colour = guide_legend(override.aes = list(size=10)))
+        legend.spacing = unit(0.35,"cm"))
 
 p1
 
@@ -578,16 +561,8 @@ acs_cnt_2016_new_ext_housing <- acs_cnt_1950_2016 %>%
 # melt the dataframe
 acs_cnt_2016_new_ext_housing_melt <- melt(acs_cnt_2016_new_ext_housing, id.var="county_name")
 
-#https://stackoverflow.com/questions/22850026/filtering-row-which-contains-a-certain-string-using-dplyr/24821141
-
-# create a column unit_type to assign new or exsting for housing units
-#acs_cnt_2016_new_ext_housing_melt %>% filter(grepl('since_2000$', variable))
-
 acs_cnt_2016_new_ext_housing_melt <- acs_cnt_2016_new_ext_housing_melt %>%
   mutate(Unit_Type = ifelse(grepl('since_2000$', variable),"New","Existing"))
-
-# create a column unit_count to assign count for housing units
-#acs_cnt_2016_new_ext_housing_melt %>% filter(grepl('*2_to_4*', variable))
 
 acs_cnt_2016_new_ext_housing_melt <- acs_cnt_2016_new_ext_housing_melt %>%
   mutate("Units_Count"=ifelse(grepl('*single*', variable),"1 Unit",
@@ -599,12 +574,8 @@ acs_cnt_2016_new_ext_housing_melt <- acs_cnt_2016_new_ext_housing_melt %>%
 # plot the graph
 p <- ggplot(acs_cnt_2016_new_ext_housing_melt, aes(x = Unit_Type, y = value, fill = Units_Count)) +
   geom_bar(stat = "identity")+
-  # scale_y_continuous(labels = comma,  limits = c(0, 12750000), breaks = c(seq(0,12750000,2000000)))+
-  #scale_x_continuous(limits= c(1950, 2016), breaks = c(seq(1950,2016,10))) +
-  #scale_colour_manual(values = c("orange","green"))+
   labs(x = "unit type", y = "num of housing units", colour = "Parameter")+
   scale_shape_manual(values = c(16, 21)) +
-  #labs(x="", y="") +
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         panel.background = element_blank(),
@@ -623,14 +594,10 @@ p <- ggplot(acs_cnt_2016_new_ext_housing_melt, aes(x = Unit_Type, y = value, fil
         legend.key = element_rect(fill = "white"),
         legend.spacing = unit(0.45,"cm"))+
   guides(colour = guide_legend(override.aes = list(size=10),reverse=F), size=FALSE)
-# Here we define spaces as the big separator
-#point <- format_format(big.mark = ",", decimal.mark = ".", scientific = FALSE)
 
 
 # make the barplot horizontal
-p1 <- p + coord_flip() #+ scale_y_continuous(labels = point,expand = expand_scale(mult = c(0, .1)))
-
-p1
+p1 <- p + coord_flip()
 
 # save the graph
 ggsave(paste0(out_dir_ch02,"p2.g1_",dateo,"_acs_cnt_1950_2016_housing_units_by_unit_type_and_count.jpg"),
@@ -638,8 +605,6 @@ ggsave(paste0(out_dir_ch02,"p2.g1_",dateo,"_acs_cnt_1950_2016_housing_units_by_u
 
 
 ###################### P2.G2 Plot Bi directional Bar chart for new housing units and proportion of single family by county ###################################################
-
-#https://stackoverflow.com/questions/18265941/two-horizontal-bar-charts-with-shared-axis-in-ggplot2-similar-to-population-pyr
 
 # subset the data for New housing units
 acs_cnt_2016_new_housing_melt <- acs_cnt_2016_new_ext_housing_melt %>% filter(Unit_Type=='New') %>% as.data.frame()
@@ -696,9 +661,6 @@ g2 <- ggplot(data = d, aes(x = county_name, y = total_new_units)) +xlab(NULL)+
   coord_flip()
 
 
-g1
-g2
-
 # join the two graphs with the county label graph
 library(gridExtra)
 gg1 <- ggplot_gtable(ggplot_build(g1))
@@ -734,11 +696,8 @@ acs_cnt_1950_2016_area_wise_owner_renter_occupancy_melt <- melt(acs_cnt_1950_201
 p <- ggplot(acs_cnt_1950_2016_area_wise_owner_renter_occupancy_melt, aes(x = area_type, y = value, fill = variable)) +
   geom_bar(stat = "identity")+
   scale_y_continuous(labels = scales::comma, breaks = trans_breaks(identity, identity, n = 5))+
-  #scale_x_continuous(limits= c(1950, 2016), breaks = c(seq(1950,2016,10))) +
-  #scale_colour_manual(values = c("orange","green"))+
   labs(x = "area type", y = "num of housing units", colour = "Parameter")+
   scale_shape_manual(values = c(16, 21)) +
-  #labs(x="", y="") +
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         panel.background = element_blank(),
@@ -757,12 +716,10 @@ p <- ggplot(acs_cnt_1950_2016_area_wise_owner_renter_occupancy_melt, aes(x = are
         legend.key = element_rect(fill = "white"),
         legend.spacing = unit(0.45,"cm"))+
   guides(colour = guide_legend(override.aes = list(size=10),reverse=F), size=FALSE)
-# Here we define spaces as the big separator
-#point <- format_format(big.mark = ",", decimal.mark = ".", scientific = FALSE)
 
 
 # make the barplot horizontal
-p1 <- p + coord_flip() #+ scale_y_continuous(labels = point,expand = expand_scale(mult = c(0, .1)))
+p1 <- p + coord_flip()
 
 p1
 
@@ -777,12 +734,6 @@ ggsave(paste0(out_dir_ch02,"p2.g3_",dateo,"_acs_cnt_1950_2016_owner_renter_occup
 ##################################### CHAPTER 3 ##############################################################
 
 ###################### P3.G1 Timeline graph for median housing value and median housing income ###################################################
-
-# get the median housing value and median housing income for all years
-# acs_cnt_1950_2016_median_housing_value_income <- acs_cnt_1950_2016 %>%
-#                                                        group_by(year) %>%
-#                                               summarise(median_housing_value_yr = median(median_housing_value, na.rm = T),
-#                                                         median_household_income_yr = median(median_household_income, na.rm = T))
 
 # get the weighted mean (weighted by population) median housing value and median housing income for all years 
 acs_cnt_1950_2016_median_housing_value_income <- acs_cnt_1950_2016 %>%
@@ -799,18 +750,11 @@ df <- na.omit(acs_cnt_1950_2016_median_housing_value_income)
 p1 <- ggplot(df, aes(x=year)) +
   geom_line(aes(y=median_housing_value_yr,size=0.1, color="median value")) +
   geom_line(aes(y=median_household_income_yr,size=0.1, color="median household income")) +
-  #geom_point(aes(y=population,shape="np"), size=5) +
-  #geom_point(aes(y=housing_units,shape="np"), size=5) +
-  #geom_point(aes(shape="np"), size=5) +
   scale_y_continuous(labels = comma, breaks = trans_breaks(identity, identity, n = 5))+
-  #scale_x_continuous(breaks = trans_breaks(identity, identity, n = 7))+
-  #scale_y_continuous(labels = comma,  limits = c(0, 450000), breaks = c(seq(0,450000,50000)))+
-  #scale_x_continuous(limits= c(1980, 2016), breaks = c(seq(1980,2016,10))) +
   scale_x_continuous(breaks = c(1980,1990,2000,2011,2016), labels = paste0(c("1980", "1990", "2000", "2011", "2016")))+
   scale_colour_manual(values = c("orange","green"))+
   labs(y = "", x = "year", colour = "Parameter")+
   scale_shape_manual(values = c(16, 21)) +
-  #labs(x="", y="") +
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         panel.background = element_blank(),
@@ -841,15 +785,9 @@ ggsave(paste0(out_dir_ch03,"p3.g1_",dateo,"_acs_cnt_1950_2016_median_housing_val
 
 # create a function to plot the absolute values
 plot_county_level_absolute_values <- function(df,colname,county_col){
-  
-  #print(colname)
+
   colname_str <- quo_name(colname)
   county_col_str <- quo_name(county_col)
-  #print(colname_str)
-  #print(county_col_str)
-  
-  #print(factor(df[,county_col_str]))
-  #print(levels(df[,county_col_str]))
   
   # sort the data by colname and retain order by county name
   df <- df[order(df[colname_str]),] # sort
@@ -889,8 +827,6 @@ plot_county_level_absolute_values <- function(df,colname,county_col){
   # make the barplot horizontal
   p1 <- p + coord_flip() + scale_y_continuous(labels = point,expand = expand_scale(mult = c(0, .1)))
   
-  print(p1)
-  
   # save the graph
   ggsave(paste0(out_dir_ch03,"p3.g2_",dateo,"_acs_cnt_2016_",colname_str,".jpg"),
          plot = p1, dpi = 300, width = 16, height = 11, units = c("in"))
@@ -914,20 +850,14 @@ for (col in col_vec){
 
 # plot the graph
 p1 <- ggplot(data = subset(acs_cnt_1950_2016, year %in% c("2016")), aes(x = median_housing_value, y = median_household_income)) +
-  #geom_point(aes(color = factor(damage_eyeball,levels=c("irreparable","extensive","minimal","none")),
-  #                fill = factor(damage_eyeball,levels=c("irreparable","extensive","minimal","none"))),size=7) +
-  #geom_point(aes(color = factor(STATE)),shape = 16, size = 3)+
   geom_point(shape = 16, size = 5)+geom_text(aes(label=county_name),hjust=-0.1, vjust=0.15)+
   scale_x_continuous(labels = comma,limits= c(0, 750000), breaks = c(seq(0,750000,100000))) +
   scale_y_continuous(limits= c(0, 130000), breaks = c(seq(0,130000,30000))) +
   labs(x = "median housing value 2016", y="median household income 2016")+
-  #scale_color_manual(values = c("none" = damage_scale[4], "minimal" = damage_scale[3],"extensive" = damage_scale[2],"irreparable" = damage_scale[1]))+
-  #geom_abline(intercept = 0, slope = 0.4, color = "grey")+  # 45 degree line
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         panel.background = element_blank(),
         panel.grid.major.y = element_line(color="gray"),
-        #legend.position = "right",
         axis.line.x = element_line(color = "black"),
         axis.ticks.x = element_blank(),
         axis.ticks.y = element_blank(),
@@ -942,7 +872,6 @@ p1 <- ggplot(data = subset(acs_cnt_1950_2016, year %in% c("2016")), aes(x = medi
         legend.key = element_rect(fill = "white"),
         legend.spacing = unit(0.35,"cm"))+ guides(colour = guide_legend(override.aes = list(size=10)))
 
-p1
 
 # save the graph
 ggsave(paste0(out_dir_ch03,"p3.g2.2_",dateo,"_acs_cnt_2016_scatter_house_median_value_vs_median_household_income.jpg"),
