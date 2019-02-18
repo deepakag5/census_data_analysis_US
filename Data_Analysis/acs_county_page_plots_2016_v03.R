@@ -281,21 +281,14 @@ plot_c1_g1 <- function(df,statefips,countyfips){
   p1 <- ggplot(df, aes(x = variable, y = value_prop)) +
   geom_bar(stat = "identity", fill="#1f78b4")+
   scale_y_continuous(labels = scales::comma, breaks = trans_breaks(identity, identity, n = 5))+
-  #scale_x_continuous(limits= c(1950, 2016), breaks = c(seq(1950,2016,10))) +
-  #scale_colour_manual(values = c("orange","green"))+
-  #labs(x = "", y = "num of existing housing units", colour = "Parameter")+
-  #labs(x = "", y = "number of housing units", colour = "Parameter")+
   labs(x = "", y = "", colour = "Parameter")+
   scale_shape_manual(values = c(16, 21)) +
-  # geom_text(aes(label=value_prop), vjust=-0.5, color=geom_text_col, size=5)+
-  #labs(x="", y="") +
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         panel.background = element_blank(),
         panel.grid.major.x = element_line(color="gray"),
         axis.title.x = element_text(colour = axis_labs_col),
         axis.title.y = element_text(colour = axis_labs_col),
-        #axis.line.x = element_line(color = "black"),
         axis.ticks.x = element_blank(),
         axis.ticks.y = element_blank(),
         axis.text = element_text(size = 20),
@@ -309,16 +302,14 @@ plot_c1_g1 <- function(df,statefips,countyfips){
         legend.key = element_rect(fill = "white"),
         legend.spacing = unit(0.45,"cm"))+
   guides(colour = guide_legend(override.aes = list(size=10),reverse=F), size=FALSE)
-# Here we define spaces as the big separator
-#point <- format_format(big.mark = ",", decimal.mark = ".", scientific = FALSE)
+
 p1 <- p1+coord_flip()
 
-print(p1)
+
 # save the graph
 ggsave(paste0(out_dir,"c1.g1.",statefips,countyfips,"_",dateo,"_acs_cnt_2016_housing_units_by_age_of_housing_type.jpg"),
        plot = p1, dpi = 300, width = 16, height = 11, units = c("in"))
 
-write.csv(df,paste0(out_dir,"c1.g1.",statefips,countyfips,"_",dateo,"_acs_cnt_2016_housing_units_by_age_of_housing_type.csv"),row.names = F)
 
 }
 
@@ -389,12 +380,8 @@ plot_c2_g2 <- function(df,statefips,countyfips){
 p1 <- ggplot(df, aes(x = variable, y = value_prop)) +
   geom_bar(stat = "identity", fill="#1f78b4")+
   scale_y_continuous(labels = scales::comma, breaks = trans_breaks(identity, identity, n = 5))+
-  #scale_x_continuous(limits= c(1950, 2016), breaks = c(seq(1950,2016,10))) +
-  #scale_colour_manual(values = c("orange","green"))+
   labs(x = "", y = "", colour = "Parameter")+
   scale_shape_manual(values = c(16, 21)) +
-  #geom_text(aes(label=value_prop), vjust=-0.5, color=geom_text_col, size=5)+
-  #labs(x="", y="") +
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         panel.background = element_blank(),
@@ -423,8 +410,6 @@ print(p1)
 # save the graph
 ggsave(paste0(out_dir,"c1.g2.",statefips,countyfips,"_",dateo,"_acs_cnt_2016_housing_units_by_structure_type.jpg"),
        plot = p1, dpi = 300, width = 16, height = 11, units = c("in"))
-
-write.csv(df,paste0(out_dir,"c1.g2.",statefips,countyfips,"_",dateo,"_acs_cnt_2016_housing_units_by_structure_type.csv"),row.names = F)
 
 }
 
@@ -474,11 +459,6 @@ new_levels <- c("less than $200,000", "$200,000 to $299,999", "$300,000 to $399,
 
 acs_cnt_2012_2016_subset_owner_occupied_melt$variable <- factor(acs_cnt_2012_2016_subset_owner_occupied_melt$variable,new_levels)
 
-# new_levels <- c("less than $100,000","$100,000 to $124,999", "$125,000 to $149,999","$150,000 to $174,999",
-#                 "$175,000 to $199,999", "$200,000 to $249,999", "$250,000 to $299,999",     "$300,000 to $399,999",
-#                 "$400,000 to $499,999",     "$500,000 to $749,999",     "$750,000 to $999,999" ,
-#       "$1,000,000 to $1,499,999", "$1,500,000 to $1,999,999", "$2,000,000 or more")
-
 
 plot_c3_g3 <- function(df,statefips,countyfips){
 
@@ -500,13 +480,8 @@ plot_c3_g3 <- function(df,statefips,countyfips){
 p1 <- ggplot(df, aes(x = variable, y = value_prop)) +
   geom_bar(stat = "identity", fill="#1f78b4")+
   scale_y_continuous(labels = scales::comma, breaks = trans_breaks(identity, identity, n = 5))+
-  #scale_x_continuous(limits= c(1950, 2016), breaks = c(seq(1950,2016,10))) +
-  #scale_colour_manual(values = c("orange","green"))+
-  #labs(x = "value of owner occupied homes - 2016", y = "", colour = "Parameter")+
   labs(x = "", y = "", colour = "Parameter")+
   scale_shape_manual(values = c(16, 21)) +
-  #geom_text(aes(label=value_prop), hjust=-0.5, color=geom_text_col, size=5)+
-  #labs(x="", y="") +
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         panel.background = element_blank(),
@@ -527,8 +502,6 @@ p1 <- ggplot(df, aes(x = variable, y = value_prop)) +
         legend.key = element_rect(fill = "white"),
         legend.spacing = unit(0.45,"cm"))+
   guides(colour = guide_legend(override.aes = list(size=10),reverse=T), size=FALSE)
-# Here we define spaces as the big separator
-#point <- format_format(big.mark = ",", decimal.mark = ".", scientific = FALSE)
 
 # make the barplot horizontal
 p1 <-p1+coord_flip()
@@ -608,13 +581,8 @@ plot_c4_g4 <- function(df,statefips,countyfips){
 p1 <- ggplot(df, aes(x = variable, y = value_prop)) +
   geom_bar(stat = "identity", fill="#1f78b4")+
   scale_y_continuous(labels = scales::comma, breaks = trans_breaks(identity, identity, n = 5))+
-  #scale_x_continuous(limits= c(1950, 2016), breaks = c(seq(1950,2016,10))) +
-  #scale_colour_manual(values = c("orange","green"))+
-#  labs(x = "household income", y = "number of households", colour = "Parameter")+
   labs(x = "", y = "", colour = "Parameter")+
   scale_shape_manual(values = c(16, 21)) +
-  #geom_text(aes(label=value_prop), hjust=-0.5, color=geom_text_col, size=5)+
-  #labs(x="", y="") +
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         panel.background = element_blank(),
@@ -636,8 +604,7 @@ p1 <- ggplot(df, aes(x = variable, y = value_prop)) +
         legend.key = element_rect(fill = "white"),
         legend.spacing = unit(0.45,"cm"))+
   guides(colour = guide_legend(override.aes = list(size=10),reverse=T), size=FALSE)
-# Here we define spaces as the big separator
-#point <- format_format(big.mark = ",", decimal.mark = ".", scientific = FALSE)
+
 
 # make the barplot horizontal
 p1 <-p1+coord_flip()
@@ -682,13 +649,6 @@ acs_cnt_2012_2016_subset_race <- acs_cnt_2012_2016_subset %>%
                                                       "All_Others") %>%
                                                  as.data.frame()
 
-#built_cols <- colnames(acs_cnt_2012_2016_subset_race)[4:ncol(acs_cnt_2012_2016_subset_race)]
-
-# built_cols <- gsub("B03002_([0-9]|[1-2][0-9])_","",built_cols)
-#
-# built_cols <- gsub("_"," ",built_cols)
-#
-# built_cols <- gsub("Black or ","",built_cols)
 
 built_cols <- c("White Alone" , "African American Alone" ,"Asian Alone"  , "Hispanic or Latino", "All Others")
 
@@ -719,12 +679,8 @@ plot_c5_g5 <- function(df,statefips,countyfips){
 p1 <- ggplot(df, aes(x = variable, y = value_prop)) +
   geom_bar(stat = "identity", fill="#1f78b4")+
   scale_y_continuous(labels = scales::comma, breaks = trans_breaks(identity, identity, n = 3))+
-  #scale_x_continuous(limits= c(1950, 2016), breaks = c(seq(1950,2016,10))) +
-  #scale_colour_manual(values = c("orange","green"))+
   labs(x = "", y = "", colour = "Parameter")+
   scale_shape_manual(values = c(16, 21)) +
-  #geom_text(aes(label=value_prop), hjust=-0.5, color=geom_text_col, size=5)+
-  #labs(x="", y="") +
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         panel.background = element_blank(),
@@ -745,8 +701,6 @@ p1 <- ggplot(df, aes(x = variable, y = value_prop)) +
         legend.key = element_rect(fill = "white"),
         legend.spacing = unit(0.45,"cm"))+
   guides(colour = guide_legend(override.aes = list(size=10),reverse=T), size=FALSE)
-# Here we define spaces as the big separator
-#point <- format_format(big.mark = ",", decimal.mark = ".", scientific = FALSE)
 
 
 p1 <-p1+coord_flip()
@@ -800,7 +754,6 @@ colnames(acs_cnt_2012_2016_subset_household_type)[4:ncol(acs_cnt_2012_2016_subse
 
 colnames(acs_cnt_2012_2016_subset_household_type)[6:7] <- c("No cash rent", "Less than $1,000")
 
-#colnames(acs_cnt_2012_2016_subset_household_type)[10] <- c("$3,500 or More")
 # melt the dataframe
 acs_cnt_2012_2016_subset_household_type_melt <- melt(acs_cnt_2012_2016_subset_household_type, id.var=c("STATE_FIPS","county_name","county_code"))
 
@@ -832,28 +785,19 @@ plot_c6_g6 <- function(df,statefips,countyfips){
 p1 <- ggplot(df, aes(x = variable, y = value_prop)) +
   geom_bar(stat = "identity", fill="#1f78b4")+
   scale_y_continuous(labels = scales::comma, breaks = trans_breaks(identity, identity, n = 3))+
-  #scale_x_continuous(limits= c(1950, 2016), breaks = c(seq(1950,2016,10))) +
-  #scale_colour_manual(values = c("orange","green"))+
-  #labs(x = "", y = "number of rental units", colour = "Parameter")+
   labs(x = "", y = "", colour = "Parameter")+
   scale_shape_manual(values = c(16, 21)) +
- # geom_text(aes(label=value_prop, size=value), hjust=-0.5, color=geom_text_col, size=5)+
-  #labs(x="", y="") +
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         panel.background = element_blank(),
-        #panel.grid.major.y = element_line(color="gray"),
         panel.grid.major.x = element_line(color="gray"),
         axis.title.x = element_text(colour = axis_labs_col),
         axis.title.y = element_text(colour = axis_labs_col),
-        #axis.line.x = element_line(color = "black"),
-        #axis.line.y = element_line(color = "black"),
         axis.ticks.x = element_blank(),
         axis.ticks.y = element_blank(),
         axis.text = element_text(size = 20),
         axis.title = element_text(size = 25),
         plot.title = element_text(size=25),
-        #axis.text.x = element_text(angle = 90, hjust = 1),
         legend.title = element_blank(),
         legend.position=c(0.9,0.9),
         legend.justification = c(1,1),
@@ -862,8 +806,6 @@ p1 <- ggplot(df, aes(x = variable, y = value_prop)) +
         legend.key = element_rect(fill = "white"),
         legend.spacing = unit(0.45,"cm"))+
   guides(colour = guide_legend(override.aes = list(size=10),reverse=T), size=FALSE)
-# Here we define spaces as the big separator
-#point <- format_format(big.mark = ",", decimal.mark = ".", scientific = FALSE)
 
 # make the barplot horizontal
 p1 <-p1+coord_flip()
@@ -877,25 +819,53 @@ write.csv(df,paste0(out_dir,"c1.g6.",statefips,countyfips,"_",dateo,"_acs_cnt_20
 
 }
 
-state_fips <- c("11","00")
+state_fips <- c("00","11","51","24","54")
 
 # call the funtion to create plot for each variable
 for (sfips in state_fips){
-  #print(sfips)
   if(sfips=="00"){
     cfips <-  c("000")
+    plot_c1_g1(acs_cnt_2012_2016_subset_built_year_melt,sfips,cfips)
+    plot_c2_g2(acs_cnt_2012_2016_subset_structure_type_melt,sfips,cfips)
+    plot_c3_g3(acs_cnt_2012_2016_subset_owner_occupied_melt,sfips,cfips)
+    plot_c4_g4(acs_cnt_2012_2016_subset_household_income_melt,sfips,cfips)
+    plot_c5_g5(acs_cnt_2012_2016_subset_race_melt,sfips,cfips)
     plot_c6_g6(acs_cnt_2012_2016_subset_household_type_melt,sfips,cfips)
   } else if(sfips=="11"){
     cfips <-  c("001")
+    plot_c1_g1(acs_cnt_2012_2016_subset_built_year_melt,sfips,cfips)
+    plot_c2_g2(acs_cnt_2012_2016_subset_structure_type_melt,sfips,cfips)
+    plot_c3_g3(acs_cnt_2012_2016_subset_owner_occupied_melt,sfips,cfips)
+    plot_c4_g4(acs_cnt_2012_2016_subset_household_income_melt,sfips,cfips)
+    plot_c5_g5(acs_cnt_2012_2016_subset_race_melt,sfips,cfips)
     plot_c6_g6(acs_cnt_2012_2016_subset_household_type_melt,sfips,cfips)
   } else if (sfips=="51"){
     cfips <- c("013","043","047","059","061","107","153","157","177","179","187","510","610","630")
-    plot_c6_g6(acs_cnt_2012_2016_subset_household_type_melt,sfips,cfips)
+      for cf in cfips{
+    plot_c1_g1(acs_cnt_2012_2016_subset_built_year_melt,sfips,cfips)
+    plot_c2_g2(acs_cnt_2012_2016_subset_structure_type_melt,sfips,cfips)
+    plot_c3_g3(acs_cnt_2012_2016_subset_owner_occupied_melt,sfips,cfips)
+    plot_c4_g4(acs_cnt_2012_2016_subset_household_income_melt,sfips,cfips)
+    plot_c5_g5(acs_cnt_2012_2016_subset_race_melt,sfips,cfips)
+    plot_c6_g6(acs_cnt_2012_2016_subset_household_type_melt,sfips,cf)
+                    }
   }else if (sfips=="24"){
     cfips <- c("009","017","021","031","033")
+    for cf in cfips{
+    plot_c1_g1(acs_cnt_2012_2016_subset_built_year_melt,sfips,cfips)
+    plot_c2_g2(acs_cnt_2012_2016_subset_structure_type_melt,sfips,cfips)
+    plot_c3_g3(acs_cnt_2012_2016_subset_owner_occupied_melt,sfips,cfips)
+    plot_c4_g4(acs_cnt_2012_2016_subset_household_income_melt,sfips,cfips)
+    plot_c5_g5(acs_cnt_2012_2016_subset_race_melt,sfips,cfips)
     plot_c6_g6(acs_cnt_2012_2016_subset_household_type_melt,sfips,cfips)
+                    }
   } else{
     cfips <- c("037")
+    plot_c1_g1(acs_cnt_2012_2016_subset_built_year_melt,sfips,cfips)
+    plot_c2_g2(acs_cnt_2012_2016_subset_structure_type_melt,sfips,cfips)
+    plot_c3_g3(acs_cnt_2012_2016_subset_owner_occupied_melt,sfips,cfips)
+    plot_c4_g4(acs_cnt_2012_2016_subset_household_income_melt,sfips,cfips)
+    plot_c5_g5(acs_cnt_2012_2016_subset_race_melt,sfips,cfips)
     plot_c6_g6(acs_cnt_2012_2016_subset_household_type_melt,sfips,cfips)
   }
 }
