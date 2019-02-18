@@ -1,9 +1,7 @@
 #####################################################################
 #
 # this program takes the summary data created in
-# /groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/python_output/2019/summary_files_data
-# by python program
-# /groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/python_programs/2019/acs_county_2010_2016_v02.py
+# /Data_Collection
 # and tries to make plots from it
 # for presentation purposes
 #
