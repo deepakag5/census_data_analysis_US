@@ -29,14 +29,10 @@ library(stringr)
 dateo <- paste(substr(Sys.Date(),1,4),substr(Sys.Date(),6,7),substr(Sys.Date(),9,10),sep="")
 dateo
 
-groupDir <- "/groups/brooksgrp"
-
 # data and output directories
-data_dir <- paste0(groupDir,"/center_for_washington_area_studies/state_of_the_capitol_region/python_output/2019/summary_files_data/")
-out_dir_intro <- paste0(groupDir,"/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2019/introduction/")
-out_dir_ch01 <- paste0(groupDir,"/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2019/ch01/")
-out_dir_ch02 <- paste0(groupDir,"/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2019/ch02/")
-out_dir_ch03 <- paste0(groupDir,"/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2019/ch03/")
+# data and output directories
+data_dir <- paste0("/Data_Collection/")
+out_dir <- paste0("/Graphs/")
 
 
 # load the data
@@ -165,7 +161,6 @@ reformat_subset_data <- function(df) {
 
   }else{
     ## for year 2015-2016
-    #data %>% select(matches('^1, detached.*attached$|attached.1$|attached.6$|attached.7$')) %>% head(2)
 
     data <- data %>% mutate('total_single_family_households_since_2000'=
                      select(.,matches('^B25127_4_|B25127_11_|B25127_47_|B25127_54_')) %>% apply(1, sum, na.rm=TRUE))
@@ -256,10 +251,6 @@ acs_cnt_2011_2016 <- rbind(acs_cnt_2007_2011_subset,acs_cnt_2008_2012_subset, ac
 
 
 # load data for years before 2011
-# dataset was created by program at following location
-# /groups/brooksgrp/center_for_washington_area_studies/sas_programs/load_county_dec_cen/decyrs1910to2010v10.sas
-
-
 acs_cnt_1910_2010 <- read.csv(paste0(groupDir,"/center_for_washington_area_studies/sas_output/load_dec_census/was_msas_1910_2010_20190115.csv"),
                               stringsAsFactors = F)
 
@@ -333,8 +324,6 @@ colnames(acs_cnt_2011_2016)[1:7] <- colnames(acs_cnt_1950_2010_subset)[1:7]
 # stack both dataframes to get pop and housing for year 1950-2016
 acs_cnt_1950_2016 <- bind_rows(acs_cnt_1950_2010_subset, acs_cnt_2011_2016)
 
-#write.csv(acs_cnt_1950_2016,paste0(out_dir,dateo,"_acs_cnt_merged_data_1950_2016.csv"))
-
 acs_cnt_1950_2016 <- acs_cnt_1950_2016 %>% mutate("area_type"=ifelse((countyfips %in% c("001") & statefips %in% c("11"))|
                                                                        (countyfips %in% c("013","510") & statefips %in% c("51")),"Urban",
                                                                      ifelse((countyfips %in% c("033","031") & statefips %in% c("24"))|
@@ -342,7 +331,7 @@ acs_cnt_1950_2016 <- acs_cnt_1950_2016 %>% mutate("area_type"=ifelse((countyfips
                                                                             "Exurban")))
 
 # replace NA with values of county, state and state code within groups
-#https://stackoverflow.com/questions/31879390/replace-na-with-values-in-another-row-of-same-column-for-each-group-in-r
+
 acs_cnt_1950_2016 <- acs_cnt_1950_2016 %>% group_by(statefips, countyfips) %>% mutate(county_name=unique(county_name[!is.na(county_name)]),
                                                                                       state_name=unique(state_name[!is.na(state_name)]),
                                                                                       state_code=unique(state_code[!is.na(state_code)]))
@@ -363,9 +352,6 @@ cpi_data$footnote_codes <- NULL
 
 # returns string w/o trailing whitespace
 trim.trailing <- function (x) sub("\\s+$", "", x)
-
-# remove trailing white space from series id column
-#https://stackoverflow.com/questions/2261079/how-to-trim-leading-and-trailing-whitespace
 
 cpi_data$series_id <- trim.trailing(cpi_data$series_id)
 
@@ -397,12 +383,6 @@ acs_cnt_1950_2016 <- acs_cnt_1950_2016 %>% mutate_at(c("median_housing_value","m
 
 ###################### P1.G1. Plot Housing Units Area Wise ###################################################
 
-# make the area type column
-# df <- acs_cnt_1950_2016 %>% mutate("area_type"=ifelse(countyfips %in% c("001","013","510") & statefips %in% c("11","51"),"Urban",
-#                                                   ifelse(countyfips %in% c("033","031","059","600","610") & statefips %in% c("24","51"),"SubUrban",
-#                                                                             "ExUrban")))
-
-
 # filter for the relevant columns
 acs_cnt_2016_subset <- acs_cnt_1950_2016 %>%
                                           filter(year=='2016') %>%
@@ -416,8 +396,6 @@ acs_cnt_2016_subset <- acs_cnt_1950_2016 %>%
 # melt the dataframe
 acs_cnt_2016_subset_melt <- melt(acs_cnt_2016_subset, id.var=c("area_type"))
 
-#https://stackoverflow.com/questions/22850026/filtering-row-which-contains-a-certain-string-using-dplyr/24821141
-
 # create a column unit_type to assign new or exsting for housing units
 acs_cnt_2016_subset_melt <- acs_cnt_2016_subset_melt %>%
                                           mutate("unit_type" = ifelse(grepl('since_2000$', variable),"New","Existing"))
@@ -426,58 +404,6 @@ acs_cnt_2016_subset_melt <- acs_cnt_2016_subset_melt %>%
 acs_cnt_2016_area_wise_new_ext_housing_melt <- acs_cnt_2016_subset_melt %>%
                                                         group_by(area_type,unit_type) %>%
                                                                   summarise("total_housing_units"=sum(value)) %>% as.data.frame()
-
-
-# https://stackoverflow.com/questions/49818271/stacked-barplot-with-colour-gradients-for-each-bar
-# ggplot(diamonds, aes(color)) +
-#   geom_bar(aes(fill = clarity), colour = "grey")
-#
-# ColourPalleteMulti <- function(df, group, subgroup){
-#
-#   # Find how many colour categories to create and the number of colours in each
-#   categories <- aggregate(as.formula(paste(subgroup, group, sep="~" )), df, function(x) length(unique(x)))
-#   print(categories)
-#
-#   category.start <- (scales::hue_pal(l = 100)(nrow(categories))) # Set the top of the colour pallete
-#   category.end  <- (scales::hue_pal(l = 40)(nrow(categories))) # set the bottom
-#
-#   print(category.start)
-#   print(category.end)
-#
-#   # Build Colour pallette
-#   colours <- unlist(lapply(1:nrow(categories),
-#                            function(i){
-#                              colorRampPalette(colors = c(category.start[i], category.end[i]))(categories[i,2])}))
-#
-#   print(colours)
-#   return(colours)
-# }
-#
-# # Create data
-# df <- diamonds
-# df$group <- paste0(df$color, "-", df$clarity, sep = "")
-#
-# # Build the colour pallete
-# colours <-ColourPalleteMulti(df, "color", "clarity")
-#
-# # Plot resultss
-# ggplot(df, aes(x=color)) +
-#   geom_bar(aes(fill = group), colour = "grey") +
-#   scale_fill_manual("Subject", values=colours, guide = "none")
-#
-#
-#
-# # Create data
-# df <- acs_cnt_2016_area_wise_new_ext_housing_melt
-# df$group <- paste0(df$area_type, "-", df$unit_type, sep = "")
-#
-# # Build the colour pallete
-# colours <- c("#a1d99b","#74c476","#9ecae1","#6baed6","#3182bd","#1f78b4")
-#
-#
-# ggplot(df, aes(x = area_type, y = total_housing_units, fill = group)) +
-#   geom_bar(stat = "identity")+
-#   scale_fill_manual("Subject", values=colours, guide = "none")
 
 
 df <- acs_cnt_2016_area_wise_new_ext_housing_melt
@@ -877,7 +803,7 @@ p <- ggplot(acs_cnt_2016_new_ext_housing_melt_rel_freq, aes(x = Unit_Type, y = u
 
 
 # make the barplot horizontal
-p1 <- p + coord_flip() #+ scale_y_continuous(labels = point,expand = expand_scale(mult = c(0, .1)))
+p1 <- p + coord_flip()
 
 p1
 
@@ -887,7 +813,6 @@ ggsave(paste0(out_dir_ch02,"p2.g1_",dateo,"_acs_cnt_1950_2016_housing_units_by_u
        plot = p1, dpi = 300, width = 16, height = 11, units = c("in"))
 
 ###################### P2.G2 Plot Bi directional Bar chart for new housing units and proportion of single family by county ###################################################
-
 
 # subset the data for New housing units
 acs_cnt_2016_new_housing_melt <- acs_cnt_2016_new_ext_housing_melt %>% filter(Unit_Type=='New') %>% as.data.frame()
@@ -908,13 +833,6 @@ df <- acs_cnt_2016_new_housing_melt %>%  select(county_name, area_type, total_ne
 
 df <- df %>% arrange(area_type,total_new_units)
 
-# create the scale vector to hold colors for all the 24 counties
-# my_scale <- rep("NA",24)
-#
-# # provide desired colors to the counties on the basis of state
-# my_scale[which(d$area_type=="Urban")] <- rep("grey",3)
-# my_scale[which(d$area_type=="Suburban")] <- rep("orange",5)
-# my_scale[which(d$area_type=="Exurban")] <- rep("purple",16)
 
 ColourPalleteMulti <- function(df, group, subgroup){
 
@@ -923,11 +841,7 @@ ColourPalleteMulti <- function(df, group, subgroup){
   print(categories)
 
 
-  # category.start <- (scales::hue_pal(l = 100)(nrow(categories))) # Set the top of the colour pallete
-  # category.end  <- (scales::hue_pal(l = 40)(nrow(categories))) # set the bottom
-
   category.start <- c("#74c476","#2b8cbe","#045a8d") # Set the top of the colour pallete
-  #category.end  <- c("#00441b","#2b8cbe","#045a8d") # set the bottom #74c476
   category.end  <- c("#74c476","#2b8cbe","#045a8d") # set the bottom #74c476
 
   print(category.start)
@@ -951,10 +865,6 @@ df$group <- paste0(df$area_type, "-", df$county_name, sep = "")
 # Build the colour pallete
 colours <-ColourPalleteMulti(df, "area_type", "county_name")
 
-# ggplot(df, aes(x = area_type, y = total_housing_units, fill = group)) +
-#   geom_bar(stat = "identity")+
-#   scale_fill_manual("Subject", values=colours)
-
 
 
 df$county_name <- factor(df$county_name,levels = df$county_name)
@@ -964,68 +874,6 @@ df$group <- factor(df$group, levels = df$group)
 df$area_type <- factor(df$area_type,levels = c("Urban","Suburban","Exurban"))
 
 
-#df_melt$county_name <- factor(df_melt$county_name,levels = df_melt$county_name)
-
-#df_melt$group <- factor(df_melt$group, levels = df_melt$group)
-
-# df_melt <- melt(df, id.var=c("county_name","area_type"))
-#
-# df_melt <- df_melt %>% arrange(area_type,variable)
-#
-# df_melt$group <- paste0(df_melt$county_name, "-", df_melt$variable, sep = "")
-#
-# df_melt$group <- factor(df_melt$group, levels = df_melt$group)
-#
-# df_melt$county_name <- as.factor(df_melt$county_name)
-#
-# df_melt$county_name - factor(df_melt$county_name, levels = df_melt$county_name)
-#
-# df_melt$area_type <- factor(df_melt$area_type,levels = c("Urban","Suburban","Exurban"))
-#
-# df$county_name <- as.character(df$county_name)
-#
-# df_melt$county_name - factor(df_melt$county_name, levels = c("Rappahannock County","Clarke County",   "Manassas city", "Manassas Park city",
-#                                                              "Fredericksburg city", "Warren County",
-#                                                              "Culpeper County", "Jefferson County", "Fauquier County",
-#                                                              "Calvert County", "Spotsylvania County",    "Stafford County",
-#                                                              "Charles County",         "Frederick County",       "Prince William County",
-#                                                              "Loudoun County","Falls Church city" ,     "Fairfax city", "Prince George's County",
-#                                                              "Montgomery County", "Fairfax County", "Alexandria city",
-#                                                              "Arlington County",       "District of Columbia"))
-
-#colours_melt <- c(rep("#a1d99b",16),rep("#74c476",5),rep("#9ecae1",3),rep("#6baed6",16),rep("#3182bd",5),rep("#1f78b4",3))
-                  #"#6baed6","#3182bd","#1f78b4")
-
-#colours_melt
-
-
-
-# p1 <- ggplot(df_melt, aes(x = county_name, y = value, fill = group)) +
-#   geom_bar(stat = "identity")+
-#   scale_y_continuous(labels = scales::comma, breaks = trans_breaks(identity, identity, n = 5))+
-#   #scale_x_continuous(limits= c(1950, 2016), breaks = c(seq(1950,2016,10))) +
-#   #scale_colour_manual(values = c("orange","green"))+
-#   #labs(x = "area type", y = "num of housing units", colour = "Parameter")+
-#   labs(x = "", y = "", colour = "Parameter")+
-#   scale_shape_manual(values = c(16, 21)) +
-#   scale_fill_manual("Subject", values=colours_melt)+
-#   #labs(x="", y="") +
-#   theme(panel.grid.major = element_blank(),
-#         panel.grid.minor = element_blank(),
-#         panel.background = element_blank(),
-#         panel.grid.major.y = element_line(color="gray"),
-#         #axis.line.x = element_line(color = "black"),
-#         axis.line.x = element_blank(),
-#         axis.ticks.x = element_blank(),
-#         axis.ticks.y = element_blank(),
-#         axis.text = element_text(size = 25),
-#         axis.title = element_text(size = 25),
-#         plot.title = element_text(size=25),
-#         legend.title = element_blank(),
-#         legend.position="none")+
-#   geom_text(aes(label = variable), # << move each label down by 1 unit
-#             position = position_stack(vjust=0.5), #vjust =2,
-#             color = "white", size = 10)
 
 
 #p1+coord_flip()
@@ -1110,8 +958,6 @@ ggsave(paste0(out_dir_ch02,"p2.g2_",dateo,"_acs_cnt_1950_2016_single_family_prop
        plot = p1, dpi = 300, width = 16, height = 11, units = c("in"))
 
 
-write.csv(df,paste0(out_dir_ch02,"p2.g2_",dateo,"_acs_cnt_1950_2016_single_family_prop_and_new_housing_units.csv"),row.names = F)
-
 ###################### P2.G3 Plot Owner Renter Occupancy Area Wise ###################################################
 
 # get total housing units grouped by year and area
@@ -1147,9 +993,6 @@ colours <- c("#a1d99b","#74c476","#9ecae1","#6baed6","#3182bd","#1f78b4")
 p1 <- ggplot(df, aes(x = area_type, y = value, fill = group)) +
   geom_bar(stat = "identity")+
   scale_y_continuous(labels = scales::comma, breaks = trans_breaks(identity, identity, n = 5))+
-  #scale_x_continuous(limits= c(1950, 2016), breaks = c(seq(1950,2016,10))) +
-  #scale_colour_manual(values = c("orange","green"))+
-  #labs(x = "area type", y = "num of housing units", colour = "Parameter")+
   labs(x = "", y = "", colour = "Parameter")+
   scale_shape_manual(values = c(16, 21)) +
   scale_fill_manual("Subject", values=colours)+
@@ -1158,7 +1001,6 @@ p1 <- ggplot(df, aes(x = area_type, y = value, fill = group)) +
         panel.grid.minor = element_blank(),
         panel.background = element_blank(),
         panel.grid.major.y = element_line(color="gray"),
-        #axis.line.x = element_line(color = "black"),
         axis.line.x = element_blank(),
         axis.ticks.x = element_blank(),
         axis.ticks.y = element_blank(),
@@ -1170,33 +1012,19 @@ p1 <- ggplot(df, aes(x = area_type, y = value, fill = group)) +
         geom_text(aes(label = variable), # << move each label down by 1 unit
             position = position_stack(vjust=0.5), #vjust =2,
             color = "white", size = 10)
- # guides(colour = guide_legend(override.aes = list(size=10),reverse=F), size=FALSE)
-# Here we define spaces as the big separator
-#point <- format_format(big.mark = ",", decimal.mark = ".", scientific = FALSE)
+
 
 p1
-# make the barplot horizontal
-#p1 <- p + coord_flip() #+ scale_y_continuous(labels = point,expand = expand_scale(mult = c(0, .1)))
 
-#p1
 
 # save the plot
 ggsave(paste0(out_dir_ch02,"p2.g3_",dateo,"_acs_cnt_1950_2016_owner_renter_occupancy_area_wise.jpg"),
        plot = p1, dpi = 300, width = 16, height = 11, units = c("in"))
 
 
-write.csv(df,paste0(out_dir_ch02,"p2.g3_",dateo,"_acs_cnt_1950_2016_owner_renter_occupancy_area_wise.csv"),row.names = F)
-
-
 ##################################### CHAPTER 3 ##############################################################
 
 ###################### P3.G1 Timeline graph for median housing value and median housing income ###################################################
-
-# get the median housing value and median housing income for all years
-# acs_cnt_1950_2016_median_housing_value_income <- acs_cnt_1950_2016 %>%
-#                                                        group_by(year) %>%
-#                                               summarise(median_housing_value_yr = median(median_housing_value, na.rm = T),
-#                                                         median_household_income_yr = median(median_household_income, na.rm = T))
 
 # get the weighted mean (weighted by population) median housing value and median housing income for all years
 acs_cnt_1950_2016_median_housing_value_income <- acs_cnt_1950_2016 %>%
@@ -1213,13 +1041,7 @@ df <- na.omit(acs_cnt_1950_2016_median_housing_value_income)
 p1 <- ggplot(df, aes(x=year)) +
   geom_line(aes(y=median_housing_value_yr,size=0.1, color="median value")) +
   geom_line(aes(y=median_household_income_yr,size=0.1, color="median household income")) +
-  #geom_point(aes(y=population,shape="np"), size=5) +
-  #geom_point(aes(y=housing_units,shape="np"), size=5) +
-  #geom_point(aes(shape="np"), size=5) +
   scale_y_continuous(labels = comma, breaks = trans_breaks(identity, identity, n = 5))+
-  #scale_x_continuous(breaks = trans_breaks(identity, identity, n = 7))+
-  #scale_y_continuous(labels = comma,  limits = c(0, 450000), breaks = c(seq(0,450000,50000)))+
-  #scale_x_continuous(limits= c(1980, 2016), breaks = c(seq(1980,2016,10))) +
   scale_x_continuous(breaks = c(1980,1990,2000,2011,2016), labels = paste0(c("1980", "1990", "2000", "2011", "2016")))+
   scale_colour_manual(values = c("orange","green"))+
   labs(y = "", x = "year", colour = "Parameter")+
@@ -1255,66 +1077,6 @@ write.csv(df,paste0(out_dir_ch03,"p3.g1_",dateo,"_acs_cnt_1950_2016_median_housi
 
 ###################### P3.G2 Bar graph for median housing value and median housing income 2016 at county level ###################################################
 
-# create a function to plot the absolute values
-# plot_county_level_absolute_values <- function(df,colname,county_col, group_col, colours){
-#
-#   #print(colname)
-#   colname_str <- quo_name(colname)
-#   county_col_str <- quo_name(county_col)
-#   group_col_str <- quo_name(group_col)
-#   #print(colname_str)
-#   #print(county_col_str)
-#
-#   #print(factor(df[,county_col_str]))
-#   #print(levels(df[,county_col_str]))
-#
-#   # sort the data by colname and retain order by county name
-#   # df <- df[order(df[colname_str]),] # sort
-#   #
-#   # df[[county_col_str]] <- factor(df[,county_col_str], levels = df[,county_col_str])  # to retain the order in plot.
-#   #
-#   # # create the scale vector to hold colors for all the 24 counties
-#   # my_scale <- rep("NA",24)
-#   #
-#   # # provide desired colors to the counties on the basis of state
-#   # my_scale[which(df$state_code=="DC")] <- rep("grey",1)
-#   # my_scale[which(df$state_code=="VA")] <- rep("orange",17)
-#   # my_scale[which(df$state_code=="MD")] <- rep("purple",5)
-#   # my_scale[which(df$state_code=="WV")] <- rep("yellow",1)
-#   print(group_col)
-#
-#   # create the plot for respective column
-#   p <- ggplot(df,aes_(x = county_col, y = colname,fill = group_col)) +
-#     geom_bar(stat = "identity")+ scale_fill_manual("Subject", values=colours)+
-#     geom_text(aes_(label=colname), hjust=-0.1, color="black", size=3.5)+
-#     theme(panel.grid.major = element_blank(),
-#           panel.grid.minor = element_blank(),
-#           panel.background = element_blank(),
-#           #panel.grid.major.y = element_line(color="gray"),
-#           legend.position = "none",
-#           title = element_text(size = 12.5),
-#           axis.line.x = element_line(color = "black"),
-#           axis.ticks.x = element_blank(),
-#           axis.ticks.y = element_blank(),
-#           axis.text = element_text(size = 10),
-#           axis.title = element_text(size = 12.5),
-#           panel.grid = element_blank(), panel.border = element_blank())
-#
-#   # Here we define spaces as the big separator
-#   point <- format_format(big.mark = ",", decimal.mark = ".", scientific = FALSE)
-#
-#
-#   # make the barplot horizontal
-#   p1 <- p + coord_flip() + scale_y_continuous(labels = point,expand = expand_scale(mult = c(0, .1)))
-#
-#   print(p1)
-#
-#   # save the graph
-#   ggsave(paste0(out_dir_ch03,"p3.g2_",dateo,"_acs_cnt_2016_",colname_str,".jpg"),
-#          plot = p1, dpi = 300, width = 16, height = 11, units = c("in"))
-#
-# }
-
 acs_cnt_2016 <- acs_cnt_1950_2016 %>% filter(year=="2016") %>%
                             mutate("median_housing_value_by_median_hh_income"=round(median_housing_value/median_household_income,2))
 
@@ -1332,8 +1094,6 @@ ColourPalleteMulti <- function(df, group, subgroup){
   print(categories)
 
 
-  # category.start <- (scales::hue_pal(l = 100)(nrow(categories))) # Set the top of the colour pallete
-  # category.end  <- (scales::hue_pal(l = 40)(nrow(categories))) # set the bottom
 
   category.start <- c("#74c476","#2b8cbe","#045a8d") # Set the top of the colour pallete
   #category.end  <- c("#00441b","#2b8cbe","#045a8d") # set the bottom #74c476
@@ -1359,11 +1119,6 @@ df$group <- paste0(df$area_type, "-", df$county_name, sep = "")
 
 # Build the colour pallete
 colours <-ColourPalleteMulti(df, "area_type", "county_name")
-
-# ggplot(df, aes(x = area_type, y = total_housing_units, fill = group)) +
-#   geom_bar(stat = "identity")+
-#   scale_fill_manual("Subject", values=colours)
-
 
 
 df$county_name <- factor(df$county_name,levels = df$county_name)
@@ -1391,25 +1146,13 @@ p <- ggplot(df,aes(x = county_name, y = median_housing_value_by_median_hh_income
         axis.title = element_text(size = 12.5),
         panel.grid = element_blank(), panel.border = element_blank())
 
-# Here we define spaces as the big separator
-#point <- format_format(big.mark = ",", decimal.mark = ".", scientific = FALSE)
-
 # make the barplot horizontal
-p1 <- p + coord_flip() #+ scale_y_continuous(labels = point,expand = expand_scale(mult = c(0, .1)))
+p1 <- p + coord_flip()
 
 p1
 
 ggsave(paste0(out_dir_ch03,"p3.g2_",dateo,"_acs_cnt_2016_","median_housing_value_by_median_hh_income",".jpg"),
           plot = p1, dpi = 300, width = 16, height = 11, units = c("in"))
-
-
-
-# call the funtion to create plot for each variable
-# for (col in col_vec){
-#   plot_county_level_absolute_values(df,quo(!!sym(col)),quo(!!sym("county_name"),quo(!!sym("group"))),colours)
-# }
-
-write.csv(df,paste0(out_dir_ch03,"p3.g2_",dateo,"_acs_cnt_2016_median_housing_value_by_median_hh_income"),row.names = F)
 
 ###################### P3.G2.2 Plot Housing Units Percent change from 2000 to 2016 vs Median Housing Value 2000 ###################################################
 
@@ -1430,24 +1173,11 @@ lm_left <- function(formula,data,...){
 # plot the graph
 p1 <- ggplot(data = subset(acs_cnt_1950_2016, year %in% c("2016")), aes(x = median_housing_value, y = median_household_income)) +
   geom_text_repel(aes(label=county_name, colour=factor(area_type)), size=5,fontface = "bold", segment.size = 0)+
-  #geom_point(aes(color = factor(damage_eyeball,levels=c("irreparable","extensive","minimal","none")),
-  #                fill = factor(damage_eyeball,levels=c("irreparable","extensive","minimal","none"))),size=7) +
-  #geom_point(aes(color = factor(STATE)),shape = 16, size = 3)+
-  #geom_point(shape = 16, size = 5)+geom_text(aes(label=county_name),hjust=-0.1, vjust=0.15)+
   scale_x_continuous(labels = comma,limits= c(0, 750000), breaks = c(seq(0,750000,100000))) +
   scale_y_continuous(limits= c(0, 130000), breaks = c(seq(0,130000,30000))) +
   labs(x = "median housing value 2016", y="median household income 2016")+
   scale_color_manual(values = c("Urban" = "#1f78b4","Suburban"="#a6cee3","Exurban"="#b2df8a"))+
-  #geom_smooth(method='lm', se=FALSE, colour="gray") + # 45 degree line
   stat_smooth(method="lm_right", fullrange=TRUE,col='#bdbdbd', se=FALSE) +
-  #geom_smooth(data=acs_cnt_2000_2016_comp_pct_2000_wo_Loudoun, method='lm', se=FALSE, colour="dark gray") + ## darker
-  #stat_smooth(data=acs_cnt_2000_2016_comp_pct_2000_wo_Loudoun,method="lm_left", fullrange=TRUE,col='#525252',se=FALSE) +
-  #geom_segment(aes(x = 410000, y = 30, xend = 400000 , yend = 22.5), arrow = arrow(length = unit(0.5, "cm")), col='#bdbdbd')+
-  #annotate(geom="text", x=409000, y=23.75, label="all counties", color="#bdbdbd", size=7)+
-  #geom_segment(aes(x = 17000, y = 50, xend = 10000 , yend = 40.5), arrow = arrow(length = unit(0.5, "cm")))+
-  #annotate(geom="text", x=25000, y=42, label="without loudoun", color="#525252", size=7)+
-  #scale_color_manual(values = c("none" = damage_scale[4], "minimal" = damage_scale[3],"extensive" = damage_scale[2],"irreparable" = damage_scale[1]))+
-  #geom_abline(intercept = 0, slope = 0.4, color = "grey")+  # 45 degree line
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         panel.background = element_blank(),
@@ -1507,13 +1237,7 @@ df <- na.omit(acs_cnt_1950_2016_pop_housing)
 p1 <- ggplot(acs_cnt_1950_2016_pop_housing, aes(x=year, group=1)) +
   geom_line(aes(y=pop_indexed,size=0.1, color="population growth")) +
   geom_line(aes(y=housing_indexed,size=0.1, color="housing growth")) +
-  #geom_point(aes(y=population,shape="np"), size=5) +
-  #geom_point(aes(y=housing_units,shape="np"), size=5) +
-  #geom_point(aes(shape="np"), size=5) +
   scale_y_continuous(labels = comma, breaks = trans_breaks(identity, identity, n = 5))+
-  #scale_x_continuous(breaks = trans_breaks(identity, identity, n = 7))+
-  #scale_y_continuous(labels = comma,  limits = c(0, 450000), breaks = c(seq(0,450000,50000)))+
-  #scale_x_continuous(limits= c(1980, 2016), breaks = c(seq(1980,2016,10))) +
   scale_x_discrete(breaks = c(1950,1960,1970,1980,1990,2000,2010,2016),
                    labels = paste0(c("1950","1960","1970","1980", "1990", "2000", "2010","2016")))+
   scale_colour_manual(values = c("orange","green"))+
