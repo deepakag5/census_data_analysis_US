@@ -723,18 +723,18 @@ for (sfips in state_fips){
     plot_c5_g5(acs_cnt_2012_2016_subset_race_melt,sfips,cfips)
     plot_c6_g6(acs_cnt_2012_2016_subset_household_type_melt,sfips,cfips)
   } else if (sfips=="51"){
-    cfips <- c("013","043","047","059","061","107","153","157","177","179","187","510","610","630")
-      for cf in cfips{
+    cfips_vec <- c("013","043","047","059","061","107","153","157","177","179","187","510","610","630")
+      for cfips in cfips_vec{
     plot_c1_g1(acs_cnt_2012_2016_subset_built_year_melt,sfips,cfips)
     plot_c2_g2(acs_cnt_2012_2016_subset_structure_type_melt,sfips,cfips)
     plot_c3_g3(acs_cnt_2012_2016_subset_owner_occupied_melt,sfips,cfips)
     plot_c4_g4(acs_cnt_2012_2016_subset_household_income_melt,sfips,cfips)
     plot_c5_g5(acs_cnt_2012_2016_subset_race_melt,sfips,cfips)
-    plot_c6_g6(acs_cnt_2012_2016_subset_household_type_melt,sfips,cf)
+    plot_c6_g6(acs_cnt_2012_2016_subset_household_type_melt,sfips,cfips)
                     }
   }else if (sfips=="24"){
-    cfips <- c("009","017","021","031","033")
-    for cf in cfips{
+    cfips_vec <- c("009","017","021","031","033")
+    for cfips in cfips_vec{
     plot_c1_g1(acs_cnt_2012_2016_subset_built_year_melt,sfips,cfips)
     plot_c2_g2(acs_cnt_2012_2016_subset_structure_type_melt,sfips,cfips)
     plot_c3_g3(acs_cnt_2012_2016_subset_owner_occupied_melt,sfips,cfips)
