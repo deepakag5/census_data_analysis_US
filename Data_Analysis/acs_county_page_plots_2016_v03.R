@@ -314,33 +314,6 @@ ggsave(paste0(out_dir,"c1.g1.",statefips,countyfips,"_",dateo,"_acs_cnt_2016_hou
 }
 
 
-
-# provide column names for which we want absolute value plot on county level
-#state_fips <- c("11", "24", "51", "54")
-
-state_fips <- c("11","00")
-
-# call the funtion to create plot for each variable
-for (sfips in state_fips){
-  #print(sfips)
-  if(sfips=="00"){
-    cfips <-  c("000")
-    plot_c1_g1(acs_cnt_2012_2016_subset_built_year_melt,sfips,cfips)
-  } else if(sfips=="11"){
-    cfips <-  c("001")
-    plot_c1_g1(acs_cnt_2012_2016_subset_built_year_melt,sfips,cfips)
-  } else if (sfips=="51"){
-    cfips <- c("013","043","047","059","061","107","153","157","177","179","187","510","610","630")
-    plot_c1_g1(acs_cnt_2012_2016_subset_built_year_melt,sfips,cfips)
-  }else if (sfips=="24"){
-    cfips <- c("009","017","021","031","033")
-    plot_c1_g1(acs_cnt_2012_2016_subset_built_year_melt,sfips,cfips)
-  } else{
-    cfips <- c("037")
-    plot_c1_g1(acs_cnt_2012_2016_subset_built_year_melt,sfips,cfips)
-  }
-}
-
 ############################################### 2 ############################################################
 
 # filter for the relevant columns
@@ -413,28 +386,6 @@ ggsave(paste0(out_dir,"c1.g2.",statefips,countyfips,"_",dateo,"_acs_cnt_2016_hou
 
 }
 
-state_fips <- c("11","00")
-
-# call the funtion to create plot for each variable
-for (sfips in state_fips){
-  #print(sfips)
-  if(sfips=="00"){
-    cfips <-  c("000")
-    plot_c2_g2(acs_cnt_2012_2016_subset_structure_type_melt,sfips,cfips)
-  } else if(sfips=="11"){
-    cfips <-  c("001")
-    plot_c2_g2(acs_cnt_2012_2016_subset_structure_type_melt,sfips,cfips)
-  } else if (sfips=="51"){
-    cfips <- c("013","043","047","059","061","107","153","157","177","179","187","510","610","630")
-    plot_c2_g2(acs_cnt_2012_2016_subset_structure_type_melt,sfips,cfips)
-  }else if (sfips=="24"){
-    cfips <- c("009","017","021","031","033")
-    plot_c2_g2(acs_cnt_2012_2016_subset_structure_type_melt,sfips,cfips)
-  } else{
-    cfips <- c("037")
-    plot_c2_g2(acs_cnt_2012_2016_subset_structure_type_melt,sfips,cfips)
-  }
-}
 
 # ############################################### 3 ############################################################
 #
@@ -488,7 +439,6 @@ p1 <- ggplot(df, aes(x = variable, y = value_prop)) +
         panel.grid.major.x = element_line(color="gray"),
         axis.title.x = element_text(colour = axis_labs_col),
         axis.title.y = element_text(colour = axis_labs_col),
-        #axis.line.x = element_line(color = "black"),
         axis.ticks.x = element_blank(),
         axis.ticks.y = element_blank(),
         axis.text = element_text(size = 20),
@@ -515,28 +465,6 @@ write.csv(df,paste0(out_dir,"c1.g3.",statefips,countyfips,"_",dateo,"_acs_cnt_20
 
 }
 
-state_fips <- c("11","00")
-
-# call the funtion to create plot for each variable
-for (sfips in state_fips){
-  #print(sfips)
-  if(sfips=="00"){
-    cfips <-  c("000")
-    plot_c3_g3(acs_cnt_2012_2016_subset_owner_occupied_melt,sfips,cfips)
-  } else if(sfips=="11"){
-    cfips <-  c("001")
-    plot_c3_g3(acs_cnt_2012_2016_subset_owner_occupied_melt,sfips,cfips)
-  } else if (sfips=="51"){
-    cfips <- c("013","043","047","059","061","107","153","157","177","179","187","510","610","630")
-    plot_c3_g3(acs_cnt_2012_2016_subset_owner_occupied_melt,sfips,cfips)
-  }else if (sfips=="24"){
-    cfips <- c("009","017","021","031","033")
-    plot_c3_g3(acs_cnt_2012_2016_subset_owner_occupied_melt,sfips,cfips)
-  } else{
-    cfips <- c("037")
-    plot_c3_g3(acs_cnt_2012_2016_subset_owner_occupied_melt,sfips,cfips)
-  }
-}
 
 # ############################################### 4 ############################################################
 #
@@ -618,28 +546,6 @@ write.csv(df,paste0(out_dir,"c1.g4.",statefips,countyfips,"_",dateo,"_acs_cnt_20
 
 }
 
-state_fips <- c("11","00")
-
-# call the funtion to create plot for each variable
-for (sfips in state_fips){
-  #print(sfips)
-  if(sfips=="00"){
-    cfips <-  c("000")
-    plot_c4_g4(acs_cnt_2012_2016_subset_household_income_melt,sfips,cfips)
-  } else if(sfips=="11"){
-    cfips <-  c("001")
-    plot_c4_g4(acs_cnt_2012_2016_subset_household_income_melt,sfips,cfips)
-  } else if (sfips=="51"){
-    cfips <- c("013","043","047","059","061","107","153","157","177","179","187","510","610","630")
-    plot_c4_g4(acs_cnt_2012_2016_subset_household_income_melt,sfips,cfips)
-  }else if (sfips=="24"){
-    cfips <- c("009","017","021","031","033")
-    plot_c4_g4(acs_cnt_2012_2016_subset_household_income_melt,sfips,cfips)
-  } else{
-    cfips <- c("037")
-    plot_c4_g4(acs_cnt_2012_2016_subset_household_income_melt,sfips,cfips)
-  }
-}
 
 # ############################################### 5 ############################################################
 #
@@ -712,29 +618,6 @@ ggsave(paste0(out_dir,"c1.g5.",statefips,countyfips,"_",dateo,"_acs_cnt_2016_hou
 
 write.csv(df,paste0(out_dir,"c1.g5.",statefips,countyfips,"_",dateo,"_acs_cnt_2016_housing_units_by_race_type.csv"),row.names = F)
 
-}
-
-state_fips <- c("11","00")
-
-# call the funtion to create plot for each variable
-for (sfips in state_fips){
-  #print(sfips)
-  if(sfips=="00"){
-    cfips <-  c("000")
-    plot_c5_g5(acs_cnt_2012_2016_subset_race_melt,sfips,cfips)
-  } else if(sfips=="11"){
-    cfips <-  c("001")
-    plot_c5_g5(acs_cnt_2012_2016_subset_race_melt,sfips,cfips)
-  } else if (sfips=="51"){
-    cfips <- c("013","043","047","059","061","107","153","157","177","179","187","510","610","630")
-    plot_c5_g5(acs_cnt_2012_2016_subset_race_melt,sfips,cfips)
-  }else if (sfips=="24"){
-    cfips <- c("009","017","021","031","033")
-    plot_c5_g5(acs_cnt_2012_2016_subset_race_melt,sfips,cfips)
-  } else{
-    cfips <- c("037")
-    plot_c5_g5(acs_cnt_2012_2016_subset_race_melt,sfips,cfips)
-  }
 }
 
 # ############################################### 6 ############################################################
