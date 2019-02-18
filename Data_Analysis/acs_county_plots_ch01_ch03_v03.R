@@ -28,7 +28,6 @@ dateo <- paste(substr(Sys.Date(),1,4),substr(Sys.Date(),6,7),substr(Sys.Date(),9
 dateo
 
 # data and output directories
-# data and output directories
 data_dir <- paste0("/Data_Collection/")
 out_dir <- paste0("/Graphs/")
 
