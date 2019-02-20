@@ -1076,6 +1076,8 @@ acs_cnt_1950_2016_median_housing_value_income$year <- as.numeric(acs_cnt_1950_20
 
 df <- na.omit(acs_cnt_1950_2016_median_housing_value_income)
 
+df <- df %>% filter(year %in% c(1980,1990,2000,2011,2016))
+
 # plot the graph
 p1 <- ggplot(df, aes(x=year)) +
   geom_line(aes(y=median_housing_value_yr,size=0.1, color="median value")) +
