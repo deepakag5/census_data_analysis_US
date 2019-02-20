@@ -771,7 +771,7 @@ acs_cnt_2016_new_ext_housing_melt_rel_freq <- acs_cnt_2016_new_ext_housing_melt 
                                                               mutate(unit_freq=round(sum_units/sum(sum_units)*100,2))
 
 # plot the graph
-p <- ggplot(acs_cnt_2016_new_ext_housing_melt_rel_freq, aes(x = Unit_Type, y = unit_freq, fill = Units_Count)) +
+p1 <- ggplot(acs_cnt_2016_new_ext_housing_melt_rel_freq, aes(x = Unit_Type, y = unit_freq, fill = Units_Count)) +
   geom_bar(stat = "identity")+
   labs(x = "unit type", y = "num of housing units", colour = "Parameter")+
   scale_shape_manual(values = c(16, 21)) +
@@ -793,15 +793,15 @@ p <- ggplot(acs_cnt_2016_new_ext_housing_melt_rel_freq, aes(x = Unit_Type, y = u
         legend.key = element_rect(fill = "white"),
         legend.spacing = unit(0.45,"cm"))+
   geom_text(
-    aes(label = unit_freq, y = unit_freq-0.6), # << move each label down by 1 unit
-    angle=45,position = position_stack(),
+    aes(label = Units_Count), # << move each label down by 1 unit
+    position = position_stack(),
     color = "white", size = 5
   )
 
 
 
 # make the barplot horizontal
-p1 <- p + coord_flip()
+#p1 <- p + coord_flip()
 
 p1
 
