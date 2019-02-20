@@ -738,7 +738,7 @@ ggsave(paste0(out_dir_ch01,"p1.g3.2_",dateo,"_acs_cnt_comp_2000_2016_scatter_hou
 # filter for the relevant columns
 acs_cnt_2016_new_ext_housing <- acs_cnt_1950_2016 %>%
                                       filter(year=='2016') %>%
-                                    select(county_name,area_type,total_single_family_households_since_2000,total_single_family_households_before_2000,
+                                    select(county_name_state_code,area_type,total_single_family_households_since_2000,total_single_family_households_before_2000,
                                            total_2_to_4_family_households_since_2000,total_2_to_4_family_households_before_2000,
                                            total_5_to_19_family_households_since_2000, total_5_to_19_family_households_before_2000,
                                            total_20_to_49_family_households_since_2000,total_20_to_49_family_households_before_2000,
@@ -746,7 +746,7 @@ acs_cnt_2016_new_ext_housing <- acs_cnt_1950_2016 %>%
                                     as.data.frame()
 
 # melt the dataframe
-acs_cnt_2016_new_ext_housing_melt <- melt(acs_cnt_2016_new_ext_housing, id.var=c("county_name","area_type"))
+acs_cnt_2016_new_ext_housing_melt <- melt(acs_cnt_2016_new_ext_housing, id.var=c("county_name_state_code","area_type"))
 
 
 # create a column unit_type to assign new or exsting for housing units
@@ -855,7 +855,7 @@ acs_cnt_2016_new_housing_melt <- acs_cnt_2016_new_ext_housing_melt %>% filter(Un
 
 # fin the total new units for each county
 acs_cnt_2016_new_housing_melt <- acs_cnt_2016_new_housing_melt %>%
-                                            group_by(county_name) %>%
+                                            group_by(county_name_state_code) %>%
                                               mutate(total_new_units=sum(value))
 
 # find the single family proportion
@@ -865,7 +865,7 @@ acs_cnt_2016_new_housing_melt <- acs_cnt_2016_new_housing_melt %>%
                                             as.data.frame()
 
 # susbset for the relevant columns
-df <- acs_cnt_2016_new_housing_melt %>%  select(county_name, area_type, total_new_units, single_family_prop)
+df <- acs_cnt_2016_new_housing_melt %>%  select(county_name_state_code, area_type, total_new_units, single_family_prop)
 
 df <- df %>% arrange(area_type,total_new_units)
 
@@ -896,14 +896,14 @@ ColourPalleteMulti <- function(df, group, subgroup){
 
 
 #df <- df_cnt_2016_area_wise_new_housing_melt
-df$group <- paste0(df$area_type, "-", df$county_name, sep = "")
+df$group <- paste0(df$area_type, "-", df$county_name_state_code, sep = "")
 
 # Build the colour pallete
-colours <-ColourPalleteMulti(df, "area_type", "county_name")
+colours <-ColourPalleteMulti(df, "area_type", "county_name_state_code")
 
 
 
-df$county_name <- factor(df$county_name,levels = df$county_name)
+df$county_name_state_code <- factor(df$county_name_state_code,levels = df$county_name_state_code)
 
 df$group <- factor(df$group, levels = df$group)
 
@@ -914,7 +914,7 @@ df$area_type <- factor(df$area_type,levels = c("Urban","Suburban","Exurban"))
 
 #p1+coord_flip()
 # create a grid with labels for counties
-g.mid<-ggplot(df,aes(x=1,y=county_name))+
+g.mid<-ggplot(df,aes(x=1,y=county_name_state_code))+
   geom_text(aes(label=county_name),size=7,color="#525252")+
   #geom_segment(aes(x=0.94,xend=0.96,yend=county_name))+
   #geom_segment(aes(x=1.04,xend=1.065,yend=county_name))+
@@ -936,7 +936,7 @@ g.mid
 
 
 # plot the county vs single family proportion
-g1 <- ggplot(data = df, aes(x = county_name, y = single_family_prop, fill=group)) +
+g1 <- ggplot(data = df, aes(x = county_name_state_code, y = single_family_prop, fill=group)) +
   geom_bar(stat = "identity") +
   ggtitle("") +
   scale_fill_manual("Subject", values=colours)+
@@ -957,7 +957,7 @@ g1 <- ggplot(data = df, aes(x = county_name, y = single_family_prop, fill=group)
 
 g1
 # plot the county vs total new units
-g2 <- ggplot(data = df, aes(x = county_name, y = total_new_units,fill=group)) +
+g2 <- ggplot(data = df, aes(x = county_name_state_code, y = total_new_units,fill=group)) +
   xlab(NULL)+
   geom_bar(stat = "identity") +
   scale_y_continuous(labels = scales::comma, breaks = trans_breaks(identity, identity, n = 5))+
@@ -989,7 +989,7 @@ gg.mid <- ggplot_gtable(ggplot_build(g.mid))
 
 gg.mid
 
-p1 <- grid.arrange(gg1,gg.mid,gg2,ncol=3,widths=c(2/9,1.5/9,5.5/9))
+p1 <- grid.arrange(gg1,gg.mid,gg2,ncol=3,widths=c(2/9,3/9,4/9))
 p1
 
 # save the graph
