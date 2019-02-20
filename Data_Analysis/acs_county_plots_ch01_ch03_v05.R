@@ -803,7 +803,9 @@ df$group <- paste0(df$Unit_Type, "-", df$Units_Count, sep = "")
 colours <-ColourPalleteMulti(df, "Unit_Type", "Units_Count")
 
 
-df$group <- factor(df$group, levels = rev(levels(as.factor(df$group))))
+df$group <- factor(df$group, levels = c( "Existing-More than 50 Units","Existing-20 to 49 Units",  "Existing-5 to 19 Units", 
+                                         "Existing-2 to 4 Units", "Existing-1 Unit", "New-More than 50 Units",
+                                         "New-20 to 49 Units","New-5 to 19 Units","New-2 to 4 Units","New-1 Unit"))
 
 # plot the graph
 p1 <- ggplot(df, aes(x = Unit_Type, y = unit_freq, fill = group)) +
