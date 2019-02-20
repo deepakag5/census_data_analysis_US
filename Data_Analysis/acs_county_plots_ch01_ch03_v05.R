@@ -938,11 +938,12 @@ g.mid
 # plot the county vs single family proportion
 g1 <- ggplot(data = df, aes(x = county_name, y = single_family_prop, fill=group)) +
   geom_bar(stat = "identity") +
- # ggtitle("Single Family Proportion") +
+  ggtitle("") +
   scale_fill_manual("Subject", values=colours)+
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         panel.background = element_blank(),
+        panel.grid.major.x = element_line(color="gray"),
         axis.title.x = element_blank(),
         axis.title.y = element_blank(),
         axis.text.y = element_blank(),
@@ -959,11 +960,12 @@ g1
 g2 <- ggplot(data = df, aes(x = county_name, y = total_new_units,fill=group)) +
   xlab(NULL)+
   geom_bar(stat = "identity") +
- # ggtitle("Total New Housing Units") +
+  ggtitle("") +
   scale_fill_manual("Subject", values=colours)+
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         panel.background = element_blank(),
+        panel.grid.major.x = element_line(color="gray"),
         axis.text = element_text(size = 20),
         axis.title.x = element_blank(),
         axis.title.y = element_blank(),
