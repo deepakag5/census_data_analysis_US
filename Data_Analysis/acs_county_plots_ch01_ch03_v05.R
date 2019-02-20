@@ -989,7 +989,7 @@ gg.mid <- ggplot_gtable(ggplot_build(g.mid))
 
 gg.mid
 
-p1 <- grid.arrange(gg1,gg.mid,gg2,ncol=3,widths=c(2/9,2.25/9,4.75/9))
+p1 <- grid.arrange(gg1,gg.mid,gg2,ncol=3,widths=c(2/9,2.05/9,4.95/9))
 p1
 
 # save the graph
@@ -1003,8 +1003,8 @@ ggsave(paste0(out_dir_ch02,"p2.g2_",dateo,"_acs_cnt_1950_2016_single_family_prop
 acs_cnt_1950_2016_area_wise_owner_renter_occupancy <- acs_cnt_1950_2016 %>%
                                                             filter(year=="2016") %>%
                                                                      group_by(area_type) %>%
-                                                      summarise("owner occupied" = sum(total_owner_occupied, na.rm = T),
-                                                                "renter occupied"=sum(total_renter_occupied, na.rm = T)) %>%
+                                                      summarise("Owner occupied" = sum(total_owner_occupied, na.rm = T),
+                                                                "Renter occupied"=sum(total_renter_occupied, na.rm = T)) %>%
                                                                                 as.data.frame()
 
 
@@ -1014,8 +1014,8 @@ acs_cnt_1950_2016_area_wise_owner_renter_occupancy_melt <- melt(acs_cnt_1950_201
 df <- acs_cnt_1950_2016_area_wise_owner_renter_occupancy_melt
 df$group <- paste0(df$area_type, "-", df$variable, sep = "")
 
-new_levels <- c("Exurban-owner occupied", "Exurban-renter occupied", "Suburban-owner occupied", "Suburban-renter occupied",
-                "Urban-owner occupied", "Urban-renter occupied" )
+new_levels <- c("Exurban-Owner occupied", "Exurban-Renter occupied", "Suburban-Owner occupied", "Suburban-Renter occupied",
+                "Urban-Owner occupied", "Urban-Renter occupied" )
 
 
 df$group <- factor(df$group,new_levels)
@@ -1057,7 +1057,7 @@ p1
 
 
 # save the plot
-ggsave(paste0(out_dir_ch02,"p2.g3_",dateo,"_acs_cnt_1950_2016_owner_renter_occupancy_area_wise.jpg"),
+ggsave(paste0(out_dir_ch02,"p2.g3_",dateo,"_acs_cnt_1950_2016_Owner_Renter_occupancy_area_wise.jpg"),
        plot = p1, dpi = 300, width = 16, height = 11, units = c("in"))
 
 
