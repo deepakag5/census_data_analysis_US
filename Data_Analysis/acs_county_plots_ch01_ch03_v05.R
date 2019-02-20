@@ -792,7 +792,7 @@ p1 <- ggplot(acs_cnt_2016_new_ext_housing_melt_rel_freq, aes(x = Unit_Type, y = 
         legend.key.size = unit(0.8,"line"),
         legend.key = element_rect(fill = "white"),
         legend.spacing = unit(0.45,"cm"))+
-  geom_text(
+  geom_text(data = subset(acs_cnt_2016_new_ext_housing_melt_rel_freq, Unit_Type=="Existing"),
     aes(label = Units_Count), # << move each label down by 1 unit
     position = position_stack(vjust=0.5),
     color = "white", size = 5
