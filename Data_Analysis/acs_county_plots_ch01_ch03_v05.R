@@ -770,10 +770,44 @@ acs_cnt_2016_new_ext_housing_melt_rel_freq <- acs_cnt_2016_new_ext_housing_melt 
                                                         summarise(sum_units=sum(value)) %>%
                                                               mutate(unit_freq=round(sum_units/sum(sum_units)*100,2))
 
+
+ColourPalleteMulti <- function(df, group, subgroup){
+  
+  # Find how many colour categories to create and the number of colours in each
+  categories <- aggregate(as.formula(paste(subgroup, group, sep="~" )), df, function(x) length(unique(x)))
+  print(categories)
+  
+  
+  
+  
+  category.start <- c("#edf8fb","#edf8fb") # Set the top of the colour pallete
+  category.end  <- c("#810f7c","#810f7c") # set the bottom #74c476
+  
+  print(category.start)
+  print(category.end)
+  
+  # Build Colour pallette
+  colours <- unlist(lapply(1:nrow(categories),
+                           function(i){
+                             colorRampPalette(colors = c(category.start[i], category.end[i]))(categories[i,2])}))
+  
+  print(colours)
+  return(colours)
+}
+
+# Create data
+df <- acs_cnt_2016_new_ext_housing_melt_rel_freq
+df$group <- paste0(df$Unit_Type, "-", df$Units_Count, sep = "")
+
+# Build the colour pallete
+colours <-ColourPalleteMulti(df, "Unit_Type", "Units_Count")
+
+
 # plot the graph
-p1 <- ggplot(acs_cnt_2016_new_ext_housing_melt_rel_freq, aes(x = Unit_Type, y = unit_freq, fill = Units_Count)) +
+p1 <- ggplot(df, aes(x = Unit_Type, y = unit_freq, fill = group)) +
   geom_bar(stat = "identity")+
   labs(x = "unit type", y = "num of housing units", colour = "Parameter")+
+  scale_fill_manual("Subject", values=colours)+
   scale_shape_manual(values = c(16, 21)) +
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
@@ -792,7 +826,7 @@ p1 <- ggplot(acs_cnt_2016_new_ext_housing_melt_rel_freq, aes(x = Unit_Type, y = 
         legend.key.size = unit(0.8,"line"),
         legend.key = element_rect(fill = "white"),
         legend.spacing = unit(0.45,"cm"))+
-  geom_text(data = subset(acs_cnt_2016_new_ext_housing_melt_rel_freq, Unit_Type=="Existing"),
+  geom_text(data = subset(df, Unit_Type=="Existing"),
     aes(label = Units_Count), # << move each label down by 1 unit
     position = position_stack(vjust=0.5),
     color = "white", size = 5
