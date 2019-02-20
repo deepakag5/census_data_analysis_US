@@ -1078,15 +1078,21 @@ df <- na.omit(acs_cnt_1950_2016_median_housing_value_income)
 
 df <- df %>% filter(year %in% c(1980,1990,2000,2011,2016))
 
+col_median_hh <- "#8c96c6"
+  
+col_median_val <- "#810f7c"
+
 # plot the graph
 p1 <- ggplot(df, aes(x=year)) +
-  geom_line(aes(y=median_housing_value_yr,size=0.1, color="median value")) +
+  geom_line(aes(y=median_housing_value_yr,size=0.1, color="median house value")) +
   geom_line(aes(y=median_household_income_yr,size=0.1, color="median household income")) +
   scale_y_continuous(labels = comma, breaks = trans_breaks(identity, identity, n = 5))+
   scale_x_continuous(breaks = c(1980,1990,2000,2011,2016), labels = paste0(c("1980", "1990", "2000", "2011", "2016")))+
-  scale_colour_manual(values = c("#8c96c6","#810f7c"))+
+  scale_colour_manual(values = c(col_median_hh,col_median_val))+
   labs(y = "", x = "year", colour = "Parameter")+
   scale_shape_manual(values = c(16, 21)) +
+  annotate(geom="text", x=1990, y=290000, label="median house value", color=col_median_hh, size=7)+
+  annotate(geom="text", x=1990, y=90000, label="median household income", color=col_median_val, size=7)+
   #labs(x="", y="") +
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
