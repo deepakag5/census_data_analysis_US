@@ -960,6 +960,7 @@ g1
 g2 <- ggplot(data = df, aes(x = county_name, y = total_new_units,fill=group)) +
   xlab(NULL)+
   geom_bar(stat = "identity") +
+  scale_y_continuous(labels = scales::comma, breaks = trans_breaks(identity, identity, n = 5))+
   ggtitle("") +
   scale_fill_manual("Subject", values=colours)+
   theme(panel.grid.major = element_blank(),
