@@ -643,7 +643,7 @@ p1 <- ggplot(data = acs_cnt_2000_2016_comp_pct_2000 , aes(x = median_housing_val
   scale_x_continuous(labels = comma,limits= c(0, 450000), breaks = c(seq(0,450000,100000))) +
   labs(x = "", y="percentage change in number of housing units, 2000 to 2016")+
   scale_color_manual(values = c("Urban" = "#1f78b4","Suburban"="#a6cee3","Exurban"="#b2df8a"))+
-  annotate(geom="text", x=409000, y=23.75, label="all counties", color="#bdbdbd", size=7)+
+  annotate(geom="text", x=409000, y=24.5, label="all counties", color="#bdbdbd", size=7)+
   annotate(geom="text", x=25000, y=43, label="without loudoun", color="#525252", size=7)+
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
