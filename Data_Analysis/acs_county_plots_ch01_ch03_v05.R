@@ -803,6 +803,8 @@ df$group <- paste0(df$Unit_Type, "-", df$Units_Count, sep = "")
 colours <-ColourPalleteMulti(df, "Unit_Type", "Units_Count")
 
 
+df$group <- factor(df$group, levels = rev(levels(as.factor(df$group))))
+
 # plot the graph
 p1 <- ggplot(df, aes(x = Unit_Type, y = unit_freq, fill = group)) +
   geom_bar(stat = "identity")+
