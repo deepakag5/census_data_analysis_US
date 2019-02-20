@@ -1084,7 +1084,7 @@ p1 <- ggplot(df, aes(x=year)) +
   geom_line(aes(y=median_household_income_yr,size=0.1, color="median household income")) +
   scale_y_continuous(labels = comma, breaks = trans_breaks(identity, identity, n = 5))+
   scale_x_continuous(breaks = c(1980,1990,2000,2011,2016), labels = paste0(c("1980", "1990", "2000", "2011", "2016")))+
-  scale_colour_manual(values = c("orange","green"))+
+  scale_colour_manual(values = c("orange","#810f7c"))+
   labs(y = "", x = "year", colour = "Parameter")+
   scale_shape_manual(values = c(16, 21)) +
   #labs(x="", y="") +
