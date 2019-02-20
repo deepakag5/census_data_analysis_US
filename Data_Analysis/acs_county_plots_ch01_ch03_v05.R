@@ -1091,8 +1091,8 @@ p1 <- ggplot(df, aes(x=year)) +
   scale_colour_manual(values = c(col_median_hh,col_median_val))+
   labs(y = "", x = "year", colour = "Parameter")+
   scale_shape_manual(values = c(16, 21)) +
-  annotate(geom="text", x=1990, y=290000, label="median house value", color=col_median_hh, size=7)+
-  annotate(geom="text", x=1990, y=90000, label="median household income", color=col_median_val, size=7)+
+  annotate(geom="text", x=1990, y=320000, label="median house value", color=col_median_val, size=7)+
+  annotate(geom="text", x=1990, y=105000, label="median household income", color=col_median_hh, size=7)+
   #labs(x="", y="") +
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
