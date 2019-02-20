@@ -1110,8 +1110,7 @@ p1 <- ggplot(df, aes(x=year)) +
         legend.text = element_text(size=25),
         legend.key.size = unit(0.8,"line"),
         legend.key = element_rect(fill = "white"),
-        legend.spacing = unit(0.45,"cm"))+
-  guides(colour = guide_legend(override.aes = list(size=10),reverse=T), size=FALSE)
+        legend.spacing = unit(0.45,"cm"))
 
 p1
 
@@ -1183,7 +1182,7 @@ p <- ggplot(df,aes(x = county_name, y = median_housing_value_by_median_hh_income
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         panel.background = element_blank(),
-        #panel.grid.major.y = element_line(color="gray"),
+        panel.grid.major.x = element_line(color="gray"),
         legend.position = "none",
         title = element_text(size = 12.5),
         #axis.line.y = element_line(color = "black"),
