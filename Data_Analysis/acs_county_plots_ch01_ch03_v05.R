@@ -1161,20 +1161,20 @@ ColourPalleteMulti <- function(df, group, subgroup){
 df <- df %>% arrange(area_type,median_housing_value_by_median_hh_income)
 
 #df <- df_cnt_2016_area_wise_new_housing_melt
-df$group <- paste0(df$area_type, "-", df$county_name, sep = "")
+df$group <- paste0(df$area_type, "-", df$county_name_state_code, sep = "")
 
 # Build the colour pallete
-colours <-ColourPalleteMulti(df, "area_type", "county_name")
+colours <-ColourPalleteMulti(df, "area_type", "county_name_state_code")
 
 
-df$county_name <- factor(df$county_name,levels = df$county_name)
+df$county_name_state_code <- factor(df$county_name_state_code,levels = df$county_name_state_code)
 
 df$group <- factor(df$group, levels = df$group)
 
 df$area_type <- factor(df$area_type,levels = c("Urban","Suburban","Exurban"))
 
 
-p <- ggplot(df,aes(x = county_name, y = median_housing_value_by_median_hh_income,fill = group)) +
+p <- ggplot(df,aes(x = county_name_state_code, y = median_housing_value_by_median_hh_income,fill = group)) +
   geom_bar(stat = "identity")+
   scale_fill_manual("Subject", values=colours)+
   #geom_text(aes(label=median_housing_value_by_median_hh_income), hjust=-0.1, color="#525252", size=5)+
