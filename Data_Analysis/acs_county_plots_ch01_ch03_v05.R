@@ -989,7 +989,7 @@ gg.mid <- ggplot_gtable(ggplot_build(g.mid))
 
 gg.mid
 
-p1 <- grid.arrange(gg1,gg.mid,gg2,ncol=3,widths=c(2/9,3/9,4/9))
+p1 <- grid.arrange(gg1,gg.mid,gg2,ncol=3,widths=c(2/9,2.25/9,4.75/9))
 p1
 
 # save the graph
