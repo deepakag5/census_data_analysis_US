@@ -1097,7 +1097,7 @@ p1 <- ggplot(df, aes(x=year)) +
         axis.title = element_text(size = 25),
         plot.title = element_text(size=25),
         legend.title = element_blank(),
-        legend.position=c(0.35,0.9),
+        legend.position="none",
         legend.justification = c(1,1),
         legend.text = element_text(size=25),
         legend.key.size = unit(0.8,"line"),
