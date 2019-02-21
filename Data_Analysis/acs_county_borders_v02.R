@@ -101,7 +101,7 @@ p1 <- ggplot() +
 
 p1
 
-ggsave(paste0(out_dir,dateo,"_county_borders_washington_urban_area.jpg"), plot = p1, dpi = 300, width = 16, height = 11, units = c("in"))
+ggsave(paste0(out_dir,"i1.m2_",dateo,"_county_borders_washington_urban_area.jpg"), plot = p1, dpi = 300, width = 16, height = 11, units = c("in"))
 
 
 # draw the plot with county names in it without any demographic data
@@ -119,4 +119,4 @@ p1 <- ggplot() +
 
 p1
 
-ggsave(paste0(out_dir,dateo,"_county_borders_washington_metro_area.jpg"), plot = p1, dpi = 300, width = 16, height = 11, units = c("in"))
+ggsave(paste0(out_dir,"i1.m1_",dateo,"_county_borders_washington_metro_area.jpg"), plot = p1, dpi = 300, width = 16, height = 11, units = c("in"))
