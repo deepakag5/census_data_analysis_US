@@ -817,7 +817,7 @@ p1 <- ggplot(df, aes(x = Unit_Type, y = unit_freq, fill = group)) +
         panel.grid.minor = element_blank(),
         panel.background = element_blank(),
         panel.grid.major.y = element_line(color="gray"),
-        axis.line.x = element_line(color = "black"),
+        #axis.line.x = element_line(color = "black"),
         axis.ticks.x = element_blank(),
         axis.ticks.y = element_blank(),
         axis.text = element_text(size = 25),
