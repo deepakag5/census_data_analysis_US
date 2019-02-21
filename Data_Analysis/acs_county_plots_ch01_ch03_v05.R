@@ -810,7 +810,7 @@ df$group <- factor(df$group, levels = c( "Existing-More than 50 Units","Existing
 # plot the graph
 p1 <- ggplot(df, aes(x = Unit_Type, y = unit_freq, fill = group)) +
   geom_bar(stat = "identity")+
-  labs(x = "unit type", y = "num of housing units", colour = "Parameter")+
+  labs(x = "", y = "", colour = "Parameter")+
   scale_fill_manual("Subject", values=colours)+
   scale_shape_manual(values = c(16, 21)) +
   theme(panel.grid.major = element_blank(),
