@@ -1266,6 +1266,36 @@ renters_burden$area_type <- factor(renters_burden$area_type, levels = c("Urban",
 renters_burden_melt <- melt(renters_burden,id.vars = "area_type")
 
 
+ColourPalleteMulti <- function(df, group, subgroup){
+  
+  # Find how many colour categories to create and the number of colours in each
+  categories <- aggregate(as.formula(paste(subgroup, group, sep="~" )), df, function(x) length(unique(x)))
+  print(categories)
+  
+  
+  
+  
+  category.start <- c("#045a8d","#2b8cbe","#74c476") # Set the top of the colour pallete
+  category.end  <- c("#045a8d","#2b8cbe","#74c476") # set the bottom #74c476
+  
+  print(category.start)
+  print(category.end)
+  
+  # Build Colour pallette
+  colours <- unlist(lapply(1:nrow(categories),
+                           function(i){
+                             colorRampPalette(colors = c(category.start[i], category.end[i]))(categories[i,2])}))
+  
+  print(colours)
+  return(colours)
+}
+
+# Create data
+df <- renters_burden_melt
+df$group <- paste0(df$area_type, "-", df$variable, sep = "")
+
+# Build the colour pallete
+colours <-ColourPalleteMulti(df, "area_type", "variable")
 
 
 ####################### Introduction Graph ##########################
