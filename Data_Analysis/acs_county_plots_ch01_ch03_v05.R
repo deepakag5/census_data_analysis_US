@@ -1256,6 +1256,18 @@ write.csv(subset(acs_cnt_1950_2016, year %in% c("2016")),
                  paste0(out_dir_ch03,"p3.g2.2_",dateo,"_acs_cnt_2016_scatter_house_median_value_vs_median_household_income.csv"),row.names=F)
 
 
+###################### P3.G3 Bar graph for renters burden area and race wise ######################
+renters_burden <- read.csv(paste0(data_dir,"rent_burdens.csv"),stringsAsFactors = F)
+
+head(renters_burden_melt)
+
+renters_burden$area_type <- factor(renters_burden$area_type, levels = c("Urban","Suburban","Exurban"))
+
+renters_burden_melt <- melt(renters_burden,id.vars = "area_type")
+
+
+
+
 ####################### Introduction Graph ##########################
 
 acs_cnt_1950_2016_decade <- acs_cnt_1950_2016 %>% filter(year %in% c("1950","1960","1970","1980","1990","2000","2010","2016"))
