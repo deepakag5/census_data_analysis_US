@@ -1330,6 +1330,14 @@ p1 <- ggplot(df, aes(x = variable, y = value, fill =  group)) +
 #           color = "white", size = 6)
 p1
 
+# save the plot
+ggsave(paste0(out_dir_ch01,"p3.g3_",dateo,"_acs_cnt_1950_2016_renters_burder_area_race_wise.jpg"),
+       plot = p1, dpi = 300, width = 16, height = 11, units = c("in"))
+
+df$group <- NULL
+
+write.csv(df,paste0(out_dir_ch01,"p3.g3_",dateo,"_acs_cnt_1950_2016_renters_burder_area_race_wise.csv"),row.names = F)
+
 ####################### Introduction Graph ##########################
 
 acs_cnt_1950_2016_decade <- acs_cnt_1950_2016 %>% filter(year %in% c("1950","1960","1970","1980","1990","2000","2010","2016"))
