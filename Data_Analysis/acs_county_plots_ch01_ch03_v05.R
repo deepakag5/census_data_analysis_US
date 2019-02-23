@@ -1303,7 +1303,32 @@ df$group <- factor(df$group, levels = df$group)
 
 df$area_type <- factor(df$area_type,levels = c("Urban","Suburban","Exurban"))
 
-
+p1 <- ggplot(df, aes(x = variable, y = value, fill =  group)) +
+  geom_bar(position = "dodge", stat = "identity")+
+  #scale_y_continuous(labels = scales::comma, breaks = trans_breaks(identity, identity, n = 4))+
+  labs(x = "", y = "", colour = "Parameter")+
+  scale_fill_manual("Subject", values=colours)+
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        #panel.grid.major.y = element_line(color="gray"),
+        #axis.line.x = element_line(color = "black"),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.text = element_text(size = 25),
+        axis.title = element_text(size = 25),
+        plot.title = element_text(size=25),
+        legend.title = element_blank(),
+        legend.position="top",
+        legend.justification = c(1,1),
+        legend.text = element_text(size=15),
+        legend.key.size = unit(0.8,"line"),
+        legend.key = element_rect(fill = "white"),
+        legend.spacing = unit(0.45,"cm"))#+
+# geom_text(data=df1,aes(label = county_name_state_code), # << move each label down by 1 unit
+#           position = position_stack(vjust=0.5), #vjust =2,
+#           color = "white", size = 6)
+p1
 
 ####################### Introduction Graph ##########################
 
