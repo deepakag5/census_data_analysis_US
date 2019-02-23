@@ -1297,6 +1297,13 @@ df$group <- paste0(df$area_type, "-", df$variable, sep = "")
 # Build the colour pallete
 colours <-ColourPalleteMulti(df, "area_type", "variable")
 
+df <- df %>% arrange(area_type)
+
+df$group <- factor(df$group, levels = df$group)
+
+df$area_type <- factor(df$area_type,levels = c("Urban","Suburban","Exurban"))
+
+
 
 ####################### Introduction Graph ##########################
 
