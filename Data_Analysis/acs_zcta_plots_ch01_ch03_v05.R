@@ -116,12 +116,21 @@ data <- data %>% mutate('existing_constructions'=select(.,matches('*before_2000$
                         %>% apply(1, sum, na.rm=TRUE))
 
 
+#data <- data %>% mutate('new_existing_constructions_ratio'=round(new_constructions/existing_constructions,2)*100)
+
+data <- data %>% mutate('new_existing_constructions_ratio'=round(new_constructions/existing_constructions,2))
+#data %>% select(matches('^total_single_family*')) %>% head(2)
+
+data$new_existing_constructions_ratio <-  ifelse(is.na(data$new_existing_constructions_ratio)==TRUE,-1,data$new_existing_constructions_ratio)
+
+data <- data %>% mutate('total_single_family_households'=select(.,matches('^total_single_family*'))
+                        %>% apply(1, sum, na.rm=TRUE))
 
 
+#data <- data %>% mutate('share_single_family_new_constructions'=round(total_single_family_households_since_2000/new_constructions,2)*100)
 
+data <- data %>% mutate('share_single_family_new_constructions'=round(total_single_family_households_since_2000/new_constructions,2))
 
-
-
-
-
+data$share_single_family_new_constructions <-  ifelse(is.na(data$share_single_family_new_constructions)==TRUE,-1,
+                                                             data$share_single_family_new_constructions)
 
