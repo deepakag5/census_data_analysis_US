@@ -232,6 +232,12 @@ plot_zcta_level_quantile_values <- function(df,colname,area_type){
       my.cols <- c("#ef1a21",my.cols)
     }
 
+    if(area_type!="00000"){
+        df <- df %>% filter(area_type=="Urban" | area_type=="Suburban")
+        cborders1960c <- cborders1960c %>% filter(area_type=="Urban" | area_type=="Suburban")
+        #print(cborders1960c)
+        }
+
 
 
     # # draw the plot with legend at the bottom
