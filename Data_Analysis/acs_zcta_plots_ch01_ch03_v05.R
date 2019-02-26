@@ -195,6 +195,8 @@ cborders1960c <- cborders1960c %>% mutate("area_type"=ifelse((COUNTY %in% c("001
 metro_dc <- st_read(dsn = paste0(groupDir,"/maps/washington_dc/metro/Metro__Lines"), layer = "Metro__Lines")
 
 
+national_highway_dc <- st_read(dsn = paste0(groupDir,"/maps/washington_dc/highway/National_Highway_System"), layer = "National_Highway_System")
+
 #df <- zcta_2016
 #colname <- "new_existing_constructions_ratio"
 # create a function to plot the absolute values
