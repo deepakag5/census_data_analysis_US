@@ -173,3 +173,152 @@ zcta_2016 <- zcta_2016 %>% mutate("area_type"=ifelse((COUNTY %in% c("001") & STA
 zcta_2016[,c(240:249)]
 
 
+
+#df <- zcta_2016
+#colname <- "new_existing_constructions_ratio"
+# create a function to plot the absolute values
+plot_zcta_level_quantile_values <- function(df,colname,area_type){
+
+    colname_str <- quo_name(colname)
+
+    # compute labels
+    labels <- c()
+    #print(df[[colname_str]])
+
+    # put manual breaks as desired
+    brks <- unique(quantile(df[[colname_str]]))
+
+
+    # create the color vector
+    my.cols <- brewer.pal(length(brks), "Blues")
+
+
+    # round the labels (actually, only the extremes)
+    for(idx in 1:length(brks)){
+      labels <- c(labels,round(brks[idx + 1], 2))
+    }
+
+    # put labels into label vector
+    labels <- labels[1:length(labels)-1]
+
+
+    if(labels[2]<1){
+    labels <- round(labels,2)
+    }else{
+    labels <- round(labels)
+    }
+    # define a new variable on the data set just as above
+    df$brks <- cut(df[[colname_str]],
+                      breaks = brks,
+                      include.lowest = TRUE,
+                      labels = labels)
+
+
+    df$brks <- as.character(df$brks)
+
+    df$brks <- ifelse(df[[colname_str]]==0,"0",df$brks)
+
+    df$brks <- ifelse(df[[colname_str]]==-1,"-1",df$brks)
+
+    brks_levels <- as.character(sort(as.numeric(levels(as.factor(df$brks)))))
+
+    df$brks <- factor(df$brks,levels=brks_levels)
+
+    brks_scale <- levels(df$brks)
+    labels_scale <- rev(brks_scale)
+
+
+
+
+    # # draw the plot with legend at the bottom
+    p <- ggplot(df) +
+      geom_sf(aes(fill=brks),colour="grey", size=0.3)+
+      geom_sf(data = metro_dc, fill=NA, colour = "white", size=0.5)+
+      geom_sf(data = national_highway_dc, fill=NA, colour = "green", size=0.5)+
+      geom_sf(data = cborders1960c, fill=NA, colour = "black", size=0.1)+
+      coord_sf() +
+      theme_map() +
+      theme(legend.position = "bottom",legend.background = element_rect(color = NA))
+
+    #print(p)
+    #
+    # # provide manual scale and colors to the graph
+    tester <- p +
+      # now we have to use a manual scale,
+      # because only ever one number should be shown per label
+      scale_fill_manual(
+        # in manual scales, one has to define colors, well, we have done it earlier
+        values = my.cols,
+        breaks = rev(brks_scale),
+        name = paste0("Quantiles of ",colname_str),
+        drop = FALSE,
+        labels = labels_scale,
+        guide = guide_legend(
+          direction = "horizontal",
+          keyheight = unit(2.5, units = "mm"),
+          keywidth = unit(85 / length(labels), units = "mm"),
+          title.position = 'top',
+          # shift the labels around, the should be placed
+          # exactly at the right end of each legend key
+          title.hjust = 0.5,
+          label.hjust = 1,
+          nrow = 1,
+          byrow = T,
+          # also the guide needs to be reversed
+          reverse = T,
+          label.position = "bottom"
+        )
+      )
+
+    #print(tester)
+
+    df_sub <- df[,c(1,234:235,240:ncol(df),236:239,2:5)]
+    st_geometry(df_sub) <- NULL
+
+    if (colname_str=='new_constructions'){
+      save_plot <- paste0(out_dir_ch01,"p1.m1.",area_type,"_",dateo,"_acs_zcta_quantiles_of_",colname_str,".jpg")
+    write.csv(df_sub,paste0(out_dir_ch01,"p1.m1.",area_type,"_",dateo,"_acs_zcta_quantiles_of_",colname_str,".csv"),row.names = F)
+    } else if (colname_str=='new_existing_constructions_ratio'){
+      save_plot <- paste0(out_dir_ch01,"p1.m2.",area_type,"_",dateo,"_acs_zcta_quantiles_of_",colname_str,".jpg")
+    write.csv(df_sub,paste0(out_dir_ch01,"p1.m1.",area_type,"_",dateo,"_acs_zcta_quantiles_of_",colname_str,".csv"),row.names = F)
+    } else if (colname_str=='share_single_family_new_constructions'){
+      save_plot <- paste0(out_dir_ch02,"p2.m1.",area_type,"_",dateo,"_acs_zcta_quantiles_of_",colname_str,".jpg")
+    write.csv(df_sub,paste0(out_dir_ch02,"p1.m1.",area_type,"_",dateo,"_acs_zcta_quantiles_of_",colname_str,".csv"),row.names = F)
+    } else if (colname_str=='Median.value..dollars'){
+      save_plot <- paste0(out_dir_ch03,"p3.m1.",area_type,"_",dateo,"_acs_zcta_quantiles_of_",colname_str,".jpg")
+    }  else {
+      save_plot <- paste0(out_dir_ch03,"p3.m1.",area_type,"_",dateo,"_acs_zcta_quantiles_of_",colname_str,".jpg")
+    }
+
+    print(save_plot)
+
+    ggsave(save_plot,plot = tester, dpi = 300, width = 16, height = 11, units = c("in"))
+
+}
+
+# provide column names for which we want absolute value plot on county level
+#col_vec <- c("new_constructions","new_existing_constructions_ratio","share_single_family_new_constructions")
+
+col_vec <- c("share_single_family_new_constructions")
+
+
+# call the funtion to create plot for each variable
+for (col in col_vec){
+  plot_zcta_level_quantile_values(zcta_2016,quo(!!sym(col)),"00000")
+  plot_zcta_level_quantile_values(zcta_2016,quo(!!sym(col)),"11111")
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
