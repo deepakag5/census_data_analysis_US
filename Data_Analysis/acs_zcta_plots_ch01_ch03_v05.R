@@ -197,6 +197,30 @@ metro_dc <- st_read(dsn = paste0(groupDir,"/maps/washington_dc/metro/Metro__Line
 
 national_highway_dc <- st_read(dsn = paste0(groupDir,"/maps/washington_dc/highway/National_Highway_System"), layer = "National_Highway_System")
 
+
+
+theme_map <- function(...) {
+  theme_minimal() +
+    theme(
+      text = element_text(family = "Ubuntu Regular", color = "#22211d"),
+      axis.line = element_blank(),
+      axis.text.x = element_blank(),
+      axis.text.y = element_blank(),
+      axis.ticks = element_blank(),
+      axis.title.x = element_blank(),
+      axis.title.y = element_blank(),
+      # panel.grid.minor = element_line(color = "#ebebe5", size = 0.2),
+      panel.grid.major = element_line(color = "white", size = 0.2),
+      panel.grid.minor = element_blank(),
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA),
+      legend.background = element_rect(fill = "white", color = NA),
+      panel.border = element_blank(),
+      ...
+    )
+}
+
+
 #df <- zcta_2016
 #colname <- "new_existing_constructions_ratio"
 # create a function to plot the absolute values
