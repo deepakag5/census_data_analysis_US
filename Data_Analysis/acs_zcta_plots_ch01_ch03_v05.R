@@ -192,6 +192,8 @@ cborders1960c <- cborders1960c %>% mutate("area_type"=ifelse((COUNTY %in% c("001
                                                                       (COUNTY %in% c("059","600","610") & STATE %in% c("51")),"Suburban",
                                                                     "Exurban")))
 
+metro_dc <- st_read(dsn = paste0(groupDir,"/maps/washington_dc/metro/Metro__Lines"), layer = "Metro__Lines")
+
 
 #df <- zcta_2016
 #colname <- "new_existing_constructions_ratio"
