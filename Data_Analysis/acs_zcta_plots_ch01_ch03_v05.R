@@ -134,3 +134,48 @@ data$share_single_family_new_constructions <-  ifelse(is.na(data$share_single_fa
 
 
 
+
+print(head(data[,c(242,243,253)]))
+
+
+zcta_2016$new_constructions <- data$new_constructions
+
+zcta_2016$existing_constructions <- data$existing_constructions
+
+zcta_2016$total_single_family_households_since_2000 <- data$total_single_family_households_since_2000
+
+zcta_2016$total_single_family_households <- data$total_single_family_households
+
+zcta_2016$new_existing_constructions_ratio <- data$new_existing_constructions_ratio
+
+zcta_2016$share_single_family_new_constructions <- data$share_single_family_new_constructions
+
+
+
+head(zcta_2016)
+
+# define a function to make countyfips column length 3
+padzero <- function(x){
+  y <- stringr::str_pad(x,3,side ="left",pad="0")
+  return(y)
+}
+
+# apply the function to get countyfips column as length 3
+zcta_2016[['COUNTY']] <- sapply(zcta_2016[["COUNTY"]], padzero)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
