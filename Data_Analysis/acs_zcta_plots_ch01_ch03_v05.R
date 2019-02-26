@@ -105,6 +105,15 @@ data <- data %>% mutate('total_50_or_more_family_households_before_2000'=
 
 
 
+#data %>% select(matches('*since_2000$')) %>% head(2)
+
+data %>% select(matches('*before_2000$')) %>% head(2)
+
+data <- data %>% mutate('new_constructions'=select(.,matches('*since_2000$'))
+                        %>% apply(1, sum, na.rm=TRUE))
+
+data <- data %>% mutate('existing_constructions'=select(.,matches('*before_2000$'))
+                        %>% apply(1, sum, na.rm=TRUE))
 
 
 
