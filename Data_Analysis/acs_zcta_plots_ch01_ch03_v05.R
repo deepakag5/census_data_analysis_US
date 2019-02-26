@@ -173,6 +173,8 @@ zcta_2016 <- zcta_2016 %>% mutate("area_type"=ifelse((COUNTY %in% c("001") & STA
 zcta_2016[,c(240:249)]
 
 
+cborders1960 <- st_read(dsn = paste0(groupDir,"/maps/united_states/census2010/counties/"), layer = "cnty_2010_20140313")
+
 
 #df <- zcta_2016
 #colname <- "new_existing_constructions_ratio"
