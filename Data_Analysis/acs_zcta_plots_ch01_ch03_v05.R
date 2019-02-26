@@ -163,19 +163,13 @@ padzero <- function(x){
 # apply the function to get countyfips column as length 3
 zcta_2016[['COUNTY']] <- sapply(zcta_2016[["COUNTY"]], padzero)
 
+zcta_2016 <- zcta_2016 %>% mutate("area_type"=ifelse((COUNTY %in% c("001") & STATE %in% c("11"))|
+                                                                       (COUNTY %in% c("013","510") & STATE %in% c("51")),"Urban",
+                                                                     ifelse((COUNTY %in% c("033","031") & STATE %in% c("24"))|
+                                                                              (COUNTY %in% c("059","600","610") & STATE %in% c("51")),"Suburban",
+                                                                            "Exurban")))
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+zcta_2016[,c(240:249)]
 
 
