@@ -185,6 +185,14 @@ cborders1960c <- cborders1960[which((cborders1960$COUNTY %in% c("001") & cborder
                                                                   "510","600","610","630","683","685")
                                        & cborders1960$STATE %in% c("51"))),]
 
+
+cborders1960c <- cborders1960c %>% mutate("area_type"=ifelse((COUNTY %in% c("001") & STATE %in% c("11"))|
+                                                               (COUNTY %in% c("013","510") & STATE %in% c("51")),"Urban",
+                                                             ifelse((COUNTY %in% c("033","031") & STATE %in% c("24"))|
+                                                                      (COUNTY %in% c("059","600","610") & STATE %in% c("51")),"Suburban",
+                                                                    "Exurban")))
+
+
 #df <- zcta_2016
 #colname <- "new_existing_constructions_ratio"
 # create a function to plot the absolute values
