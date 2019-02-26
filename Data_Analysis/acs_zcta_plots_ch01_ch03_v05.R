@@ -176,6 +176,15 @@ zcta_2016[,c(240:249)]
 cborders1960 <- st_read(dsn = paste0(groupDir,"/maps/united_states/census2010/counties/"), layer = "cnty_2010_20140313")
 
 
+
+
+cborders1960c <- cborders1960[which((cborders1960$COUNTY %in% c("001") & cborders1960$STATE %in% c("11"))|
+                                      (cborders1960$COUNTY %in% c("009","017","021","031","033") & cborders1960$STATE %in% c("24"))|
+                                      (cborders1960$COUNTY %in% c("037") & cborders1960$STATE %in% c("54"))|
+                                      (cborders1960$COUNTY %in% c("013","043","047","059","061","107","153","157","177","179","187",
+                                                                  "510","600","610","630","683","685")
+                                       & cborders1960$STATE %in% c("51"))),]
+
 #df <- zcta_2016
 #colname <- "new_existing_constructions_ratio"
 # create a function to plot the absolute values
