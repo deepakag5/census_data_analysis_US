@@ -227,6 +227,10 @@ plot_zcta_level_quantile_values <- function(df,colname,area_type){
     brks_scale <- levels(df$brks)
     labels_scale <- rev(brks_scale)
 
+    if(labels_scale[length(labels_scale)]=="-1"){
+      labels_scale[length(labels_scale)] <- "NA"
+      my.cols <- c("#ef1a21",my.cols)
+    }
 
 
 
