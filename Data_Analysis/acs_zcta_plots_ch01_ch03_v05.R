@@ -134,3 +134,5 @@ data <- data %>% mutate('share_single_family_new_constructions'=round(total_sing
 data$share_single_family_new_constructions <-  ifelse(is.na(data$share_single_family_new_constructions)==TRUE,-1,
                                                              data$share_single_family_new_constructions)
 
+
+
