@@ -3,9 +3,9 @@ Data Collection, analysis and graphics for Greater Washington Area DC
 
 ![i1 m1_20190315_county_borders_washington_metro_area](https://user-images.githubusercontent.com/32446623/54705226-b1715580-4b12-11e9-85d6-d64a444adeb6.jpg)
 
-![p1 m1 00000_20190318_acs_zcta_quantiles_of_new_constructions_all_zctas](https://user-images.githubusercontent.com/32446623/54705332-f0071000-4b12-11e9-99f6-eb28c38e1750.jpg)
-
 ![i1 m2_20190315_county_borders_washington_urban_area](https://user-images.githubusercontent.com/32446623/54705240-b6cea000-4b12-11e9-9c7a-d2fde9aacaa9.jpg)
+
+![p1 m1 00000_20190318_acs_zcta_quantiles_of_new_constructions_all_zctas](https://user-images.githubusercontent.com/32446623/54705332-f0071000-4b12-11e9-99f6-eb28c38e1750.jpg)
 
 ![p1 m1 11111_20190318_acs_zcta_quantiles_of_new_constructions_all_zctas](https://user-images.githubusercontent.com/32446623/54705296-d960b900-4b12-11e9-995e-090b740cd19a.jpg)
 
