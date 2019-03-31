@@ -20,7 +20,7 @@ Data Collection, analysis and graphics for Greater Washington Area DC
 
 ![p2 g1_20190312_acs_cnt_1950_2017_housing_units_by_unit_type_and_count](https://user-images.githubusercontent.com/32446623/54705598-92bf8e80-4b13-11e9-94a5-2a3d189cd4bc.jpg)
 
-![p2 g2_20190309_acs_cnt_1950_2017_single_family_prop_and_new_housing_units](https://user-images.githubusercontent.com/32446623/54705652-b256b700-4b13-11e9-963c-bd93afb44d1a.jpg)
+![p2 g2_20190329_acs_cnt_1950_2017_single_family_prop_and_new_housing_units](https://user-images.githubusercontent.com/32446623/55290289-8226d800-539f-11e9-958c-925cb91de9c7.jpg)
 
 ![p2 g3_20190304_acs_cnt_1950_2017_Owner_Renter_occupancy_area_wise](https://user-images.githubusercontent.com/32446623/54705666-c00c3c80-4b13-11e9-8b4c-5b48863b5be8.jpg)
 
