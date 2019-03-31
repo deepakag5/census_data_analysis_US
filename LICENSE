@@ -19,3 +19,49 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+
+
+Data Sources :
+
+A. Map files
+
+County boundaries
+
+US Census Bureau, 2014. 2010 Census county boundaries. Downloaded cb_2017_us_county_500k.zip 2/28/2014 from https://www.census.gov/geo/maps-data/data/cbf/cbf_counties.html
+
+Zip code boundaries
+
+US Census Bureau, 2019. 2017 American Community Survey zip code tabulation areas. Downloaded cb_2017_us_zcta510_500k.zip from https://www.census.gov/geo/maps-data/data/cbf/cbf_counties.html
+
+Metro map
+
+Copyright 2017. National Capital Region Transportation Planning Board
+Downloaded Metro__Lines.zip from
+http://rtdc-mwcog.opendata.arcgis.com/datasets/0d90d7b18c644657ba7646149b72e2d1_1 
+
+Highway map
+
+US Census Bureau, 2017 TIGER/Line® Shapefiles: Roads
+Downloaded tl_2017_us_primaryroads.zip from
+https://www.census.gov/cgi-bin/geo/shapefiles/index.php?year=2017&layergroup=Roads
+
+B. Data files
+
+Data files
+ICPSR is https://www.icpsr.umich.edu/icpsrweb/
+
+2000 Census 
+
+United States. Bureau of the Census. Census of Population and Housing, 2000 [United States]: Summary File 3, All states . Ann Arbor, MI: [distributor], 2006-01-12. https://doi.org/10.3886/ICPSR13342.v1
+
+2010 Census 
+
+2010 Census Summary File 1 United States, prepared by the U.S. Census Bureau, 2011.
+
+American Community Survey, 2013-2017
+United States Census Bureau.“Summary File.”2007 – 2011 American Community Survey. U.S. Census Bureau’s American Community Survey Office, 2013. Web. 1 January 2013 <http://ftp2.census.gov/>.
+
+Integrated Public Use Microdata Extract, 2012-2016
+
+Ruggles, Steven, Sarah Flood, Ronald Goeken, Josiah Grover, Erin Meyer, Jose Pacas, and Matthew Sobek. IPUMS USA: Version 8.0 [dataset]. Minneapolis, MN: IPUMS, 2018. https://doi.org/10.18128/D010.V8.0
