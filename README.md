@@ -28,6 +28,7 @@ Data Collection, analysis and graphics for Greater Washington Area DC
 
 ![p3 g1_20190309_acs_cnt_1950_2017_median_housing_value_household_income](https://user-images.githubusercontent.com/32446623/54705751-e5994600-4b13-11e9-91be-43714b40c034.jpg)
 
-![p3 g2_20190309_acs_cnt_2017_median_housing_value_by_median_hh_income](https://user-images.githubusercontent.com/32446623/54705760-eb8f2700-4b13-11e9-8f2c-89caeac61547.jpg)
+![p3 g2_20190329_acs_cnt_2017_median_housing_value_by_median_hh_income](https://user-images.githubusercontent.com/32446623/55290267-3a07b580-539f-11e9-943f-4e7cecd4a55c.jpg)
 
-![p3 g3_20190228_acs_cnt_2016_median_gross_rent_as_a_percentage_of_household_income](https://user-images.githubusercontent.com/32446623/54705772-ef22ae00-4b13-11e9-87a7-cda878f85dfa.jpg)
+![p3 g3_20190329_acs_cnt_2017_median_gross_rent_as_a_percentage_of_household_income](https://user-images.githubusercontent.com/32446623/55290269-455ae100-539f-11e9-9489-d953931ff979.jpg)
+
