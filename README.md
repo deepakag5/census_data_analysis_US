@@ -1,4 +1,9 @@
 ## US CENSUS DATA ANALYSIS (1930-2017)
+
+Link for the full report :
+
+https://cpb-us-e1.wpmucdn.com/blogs.gwu.edu/dist/7/677/files/2019/05/20190507_socr_2019_pages.pdf
+
 Data Collection, analysis and graphics for Greater Washington Area DC
 
 ![i1 m1_20190315_county_borders_washington_metro_area](https://user-images.githubusercontent.com/32446623/54705226-b1715580-4b12-11e9-85d6-d64a444adeb6.jpg)
